@@ -1,0 +1,29 @@
+Gene Regulatory Interaction Formulator For Inquiring Networks 
+Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas
+Universidad Nacional Autónoma de México
+Griffin Software
+Version 0.1.5 Beta
+
+1. Griffin requires of a java 8 runtime environment. We recommend you use the
+Java SE Runtime Environment 8 from http://www.oracle.com
+
+  Follow installation instructions and run the following command to check the installation:
+
+  java -version
+
+2. In order to have syntax coloring of query files using gedit you need to copy the file edit/griffin.lang to /usr/share/gtksourceview-2.0/language-specs 
+
+  sudo cp edit/griffin.lang /usr/share/gtksourceview-2.0/language-specs
+
+3. Add the environment variable GRIFFIN_HOME in your .bashrc file
+
+  sudo pico ~/.bashrc
+ 
+  add this two lines changing : <PATH-TO-GRIFFIN> with the path to the location of Griffin
+
+  export GRIFFIN_HOME=<PATH-TO-GRIFFIN>
+  export PATH=$PATH:$GRIFFIN_HOME
+
+4. Check installation by typing:
+
+  griffin -h

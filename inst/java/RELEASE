@@ -1,0 +1,40 @@
+Gene Regulatory Interaction Formulator For Inquiring Networks 
+Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas
+Universidad Nacional Autónoma de México
+Griffin Software
+
+23 January 2017
+Version 0.1.5 Beta
+Subspaces support
+Resilience computation
+
+19 May 2016
+Version 0.1.4 Beta
+Basin of attraction support
+
+13 April 2016
+Version 0.1.3 Beta
+Possibility to negate specific steady states
+
+11 March 2016
+Version 0.1.2 Beta
+Topological and functional distance for networks
+
+16 February 2016
+Version 0.1.1 Beta
+Beta initial release of griffin java library
+
+Griffin basic support for: 
+
+Postive and negative known gene regulations
+Postive and negative hypothetical regulations
+Exact set of steady states
+Extended set of steady states
+Wildtype and mutant steady states
+Input-output individual transitions
+Known cyclic attractors
+Arbitrary state-space trajectories
+A posteriori refinement of models
+Division of queries by topology
+
+

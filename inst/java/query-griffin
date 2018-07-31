@@ -1,0 +1,33 @@
+#!/bin/bash  
+
+EXEC_DIR=$(date +%Y%m%d_%H%M%S)
+echo $EXEC_DIR
+mkdir $EXEC_DIR
+mkdir -p ARCHIVE
+cp *.grf $EXEC_DIR
+cd $EXEC_DIR
+
+index=1
+for query in $(ls *.grf); do
+  if [[ "$@" == "-d" || "$@" == "--distances" ]]; then
+    griffin -f "$query" -o "${query%.grf}.out" $1 "${query%.grf}.distances.out" -p $index
+  else
+    griffin -f "$query" -o "${query%.grf}.out" -p $index
+  fi
+  opt=( $(cat $GRIFFIN_HOME/conf/griffin.properties | grep "app.option.batch.prefixes.file" | tr "=" "\n") )
+  echo $index = "${query%.grf}.out" >> ${opt[1]}
+  ((index++))
+done
+
+if [[ "$@" == "-xd" || "$@" == "--cross-distances" ]]; then
+  cross-distances
+  opt=( $(cat $GRIFFIN_HOME/conf/griffin.properties | grep "app.option.crossdistances.out.file" | tr "=" "\n") )
+  echo "total number of computed distances: " $(wc -l ${opt[1]} | awk '{print $1}') 
+fi
+
+cd ..
+if [ -f nohup.out ]; then
+    cp nohup.out $EXEC_DIR
+fi
+tar -zcvf $EXEC_DIR.tgz $EXEC_DIR
+mv $EXEC_DIR.tgz ARCHIVE/

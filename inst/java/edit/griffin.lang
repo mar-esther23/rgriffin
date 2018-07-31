@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language id="griffin" _name="griffin" version="2.0" _section="Source">
+  <metadata>
+    <property name="mimetypes">text/x-griffin</property>
+    <property name="globs">*.grf</property>
+    <property name="line-comment-start">#</property>
+  </metadata>
+  <styles>
+    <style id="boolean" _name="Boolean" map-to="java:boolean"/>
+    <style id="number" _name="String" map-to="java:char"/>
+    <style id="controls" _name="String" map-to="java:char"/>
+    <style id="keywords" _name="Keyword" map-to="python:keyword"/>
+    <style id="options" _name="Control options" map-to="java:declaration"/>
+    <style id="comment" _name="Comment" map-to="c:comment"/>
+    <style id="type" _name="Regulations" map-to="java:type"/>
+  </styles>
+  <definitions>
+
+
+
+    <context id="griffin">
+      <include>
+                <context id="comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+                    <start>#</start>
+
+                    <include>
+                      <context ref="def:in-line-comment"/>
+                    </include>
+                </context>
+
+      <context id="controls" style-ref="controls">
+      <keyword>false</keyword>
+      <keyword>true</keyword>
+      <keyword>sequential</keyword>
+      <keyword>radial</keyword>
+    </context>
+
+    <context id="numeric" style-ref="number">
+      <match extended="true">
+        (\b([0-9]+|0[xX][0-9a-fA-F]+)[Ll]?\b|
+         \b(([0-9]+[Ee][-]?[0-9]+|
+            ([0-9]*\.[0-9]+|[0-9]+\.)([Ee][-]?[0-9]+)?)[fFdD]?|
+            [0-9]+[FfDd]))
+      </match>
+    </context>
+
+        <context id="keywords" style-ref="keywords">
+          <keyword>genes</keyword>
+          <keyword>known</keyword>
+          <keyword>hypothetical</keyword>
+          <keyword>interactions</keyword>
+          <keyword>fixed-points</keyword>
+          <keyword>trajectories</keyword>
+          <keyword>cycles</keyword>
+          <keyword>input-output-pairs</keyword>
+          <keyword>subspaces</keyword>
+          <keyword>update-rules</keyword>
+        </context>
+
+        <context id="options" style-ref="options">
+          <keyword>allow.ambiguity</keyword>
+          <keyword>allow.additional.states</keyword>
+          <keyword>block.steady.a.posteriori</keyword>
+          <keyword>divide.query.by.topology</keyword>
+	  <keyword>topology.range</keyword>
+	  <keyword>limit.boolean.networks</keyword>
+          <keyword>topology.iterator.type</keyword>
+	  <keyword>topological.distance.radius</keyword>
+	  <keyword>allow.additional.cycles</keyword>
+	  <keyword>allow.hypotheses</keyword>
+        </context>
+
+    <context id="type" style-ref="type">
+      <keyword>MA</keyword>
+      <keyword>MPU</keyword>
+      <keyword>MPPA</keyword>
+      <keyword>MNU</keyword>
+      <keyword>MNPA</keyword>
+      <keyword>MUSU</keyword>
+      <keyword>MUSPA</keyword>
+      <keyword>NR</keyword>
+      <keyword>OA</keyword>
+      <keyword>OPU</keyword>
+      <keyword>OPPA</keyword>
+      <keyword>ONU</keyword>
+      <keyword>ONPA</keyword>
+      <keyword>OUSU</keyword>
+    </context>
+
+      </include>
+    </context>
+  </definitions>
+</language>

@@ -1,0 +1,41 @@
+Gene Regulatory Interaction Formulator For Inquiring Networks 
+Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas
+Universidad Nacional Autónoma de México
+Griffin Software
+Version 0.1.5 Beta
+
+Griffin jar is release under the GNU LESSER GENERAL PUBLIC LICENSE.
+Please note that other jar dependencies are released under different licensing terms
+
+External dependencies
+Library	Version
+Java BeeDeeDee Library 1.0.7 GPL License
+Commons BeanUtils 1.8.x Apache License
+Commons BeanUtils Bean Collection 1.8.x Apache License
+Commons BeanUtils Core 1.8.x Apache License
+Commons CLI 1.2.x Apache License
+Commons Lang 3.3.x Apache License
+Log4j 1.2.x Apache License
+SAT4j Core 2.3.4 Eclipse Public License
+
+A copy of the license files can be found in the lib directory
+
+
+To execute griffin follow the steps below
+
+Linux:
+
+1. Grant the griffin script execution permission:
+
+  chmod +x griffin
+
+2. Run the script with -h option for help
+
+  ./griffin -h
+
+3. Examples can be found in examples/queries folder, to query Griffin with akutsu.grf type the following
+  
+  griffin -f akutsu.grf -o akutsu.out
+
+
+

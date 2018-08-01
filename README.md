@@ -8,32 +8,22 @@ The rgriffin package is an R connector to griffin (http://turing.iimas.unam.mx/g
 
 # Installation
 
-1. Install griffin and java
-	Follow the griffin instalation instructions
-	http://turing.iimas.unam.mx/griffin/guide.html#instal
-	
-	If you are using linux we recomend you install Oracle JDK 8
-	https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
-	
-	Do not forget to configure your environmental variables
 
+First, make sure to have java installed. 
 
-2. Install rJava
-	rgriffin depends on rJava. However, installing rJava can be complicated, we recomend that you first install rJava and then rgriffin.
+rgriffin depends on Java and rJava. Make sure you have a working java version, for example Oracle JDK 8. Installing rJava can be complicated, we recomend that you first install rJava and then rgriffin.
 	```
 	> install.packages(Rjava)
 	```
 
-	If you are using ubuntu it might help if you install it from repositories
+If you are using ubuntu it might help if you install it from repositories
 	```
 	$ apt-get install r-cran-rjava
 	```
 
-
-3. Install rgriffin
-	You can install rgriffin from github using devtools
+Then, install rgriffin from github using devtools
 	```
-	>
+	>devtools::install_github("mar-esther23/rgriffin")
 	```
 
 

@@ -13,38 +13,35 @@
 #' @keywords internal
 #' 
 .onLoad <- function(lib, pkg, ...) {
+  init.griffin(force.init=FALSE)
+}
+
+#' Initialize the Java Virtual Machine (JVM) and create a connection with griffin
+#' 
+#' Initialize the Java Virtual Machine (JVM) and create a connection with griffin.
+#' By default it takes the parameters from the "java/jvm-param.R" file. To change the defaults modify this file in your rgriffin folder
+#'  
+#' @param jvm.param string with parameters to initialize the jvm. 
+#' @param force.init If set to TRUE JVM is re-initialized even if it is already running.
+#' 
+#' @example 
+#' #initialize griffin with only 2GB of RAM
+#' init.griffin("-XX:-UseGCOverheadLimit -Xmx2000m ")
+#' 
+#' @export
+init.griffin <- function(jvm.param="", force.init=TRUE) {
+  #Load all variables
   griffin.path = paste0(system.file(package = "rGriffin"),"/java/")
   griffin.dirs = c("bin","lib")
   files = list.files(paste(griffin.path,griffin.dirs,sep=""),pattern="\\.jar$",full.names=TRUE)
-  params = c(strsplit(Sys.getenv("GRIFFIN_JVM_OPTIONS"),"\\s+")[[1]],
-             paste("-Dlog4j.configuration=file:",griffin.path,"conf/log4j.properties",sep=""))
+  if (all.equal(jvm.param,"")) source(paste0(griffin.path,"jvm-param.R")) #load jvm.param from conf file
+  params = paste0(jvm.param, "-Dlog4j.configuration=file:",
+                  griffin.path,"conf/log4j.properties")
+  
   #JVM initialization
   .jinit(parameters=params)
   .jaddClassPath(".")
   .jaddClassPath(paste(griffin.path,"conf",sep=""))
   for(f in files){ .jaddClassPath(f) }
-  
 }
 
-#' 
-#' griffin.path = Sys.getenv("GRIFFIN_HOME")
-#' if (all.equal(griffin.path, "")) griffin.path = "/home/esther/griffin-0.1.6/"
-#' 
-#' #' Init java and griffin
-#' init.rjava.griffin <- function(griffin.path) {
-#'   griffin.dirs = c("bin","lib")
-#'   print(griffin.path)
-#'   files = list.files(paste(griffin.path,griffin.dirs,sep=""),pattern="\\.jar$",full.names=TRUE)
-#'   params = c(strsplit(Sys.getenv("GRIFFIN_JVM_OPTIONS"),"\\s+")[[1]],
-#'              paste("-Dlog4j.configuration=file:",griffin.path,"conf/log4j.properties",sep=""))
-#'   
-#'   #JVM initialization
-#'   library(rJava)
-#'   .jinit(parameters=params)
-#'   .jaddClassPath(".")
-#'   .jaddClassPath(paste(griffin.path,"conf",sep=""))
-#'   for(f in files){ .jaddClassPath(f) }
-#' }
-#' 
-#' 
-#' 

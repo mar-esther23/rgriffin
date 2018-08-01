@@ -8,8 +8,9 @@ Description:
     The rgriffin package includes a number of functions to interact with the BoolNet package.
     See the Jupyter Tutorials for more examples.
 Depends: R (>= 3.1.0), rJava (>= 0.9) 
-Suggests: BoolNet
+Suggests: BoolNet, iterators
 SystemRequirement: Java
 License: MIT
+Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0

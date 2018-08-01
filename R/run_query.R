@@ -28,6 +28,30 @@
 #' @return 
 #' 
 #' @examples
+#' # Define the query
+#' genes = c('a','b','c')
+#' inter = data.frame(source=c('a','b','b','c','c'), 
+#'                    target=c('b','b','c','b','c'), 
+#'                    type=c('+','+','-','-','+'),
+#'                    stringsAsFactors = F )
+#' q = create.gquery.graph(inter, genes)
+#' attr = data.frame(a=c(0,'*',0), 
+#'                   b=c(0,1,0), 
+#'                   c=c(0,0,1),
+#'                   stringsAsFactors = F )
+#' q = add.gquery.attractors(q, attr)
+#' print( q )
+#' 
+#' # Run the query
+#' nets = run.gquery(q)
+#' print( nets )
+#' 
+#' # Get BoolNet iterator
+#' nets = run.gquery(q, return="BoolNet")
+#' nets
+#' nextElem(nets)
+#' 
+#' 
 #' @export
 
 run.gquery <- function(query, 

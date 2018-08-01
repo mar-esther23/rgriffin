@@ -7,6 +7,10 @@
 #' [ ] add.gquery.functions <- function(df) {future}
 #' [ ] add.gquery.labels  <- function(df) {future} 
 
+library(rJava)
+
+
+
 #' Initialize jvm 
 #' @keywords internal
 #' 
@@ -17,7 +21,6 @@
   params = c(strsplit(Sys.getenv("GRIFFIN_JVM_OPTIONS"),"\\s+")[[1]],
              paste("-Dlog4j.configuration=file:",griffin.path,"conf/log4j.properties",sep=""))
   #JVM initialization
-  library(rJava)
   .jinit(parameters=params)
   .jaddClassPath(".")
   .jaddClassPath(paste(griffin.path,"conf",sep=""))

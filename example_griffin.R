@@ -44,17 +44,9 @@ print( q )
 
 nets = run.gquery(q)
 print(nets)
-#print(nextElem(nets))
 
-
-
-
-
-
-
-
-
-
+nets = run.gquery(q,return = "BoolNet")
+print( iterators::nextElem(nets) )
 
 
 

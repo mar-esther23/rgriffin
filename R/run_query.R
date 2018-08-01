@@ -133,14 +133,8 @@ run.gquery <- function(query,
     }
     return(c(folder.name,network.name))
   }
-  if (return=="iterator") {
-    library("iterators")
-    return( griffin.model.iterator(controller) )
-  }
-  if (return=="BoolNet") {
-    library("iterators")
-    return( boolnet.model.iterator(controller) )
-  }
+  if (return=="iterator") return( griffin.model.iterator(controller) )
+  if (return=="BoolNet") return( boolnet.model.iterator(controller) )
 }
 
 
@@ -156,6 +150,7 @@ run.gquery <- function(query,
 #' @keywords internal
 #' 
 griffin.model.iterator <- function(controller,n=1) {
+  if(  !("iterators" %in% (.packages()))  ) warning("iterators is not attached")
   nextEl <- function() {
     n <- .jcall(controller,returnSig = "[Ljava/lang/String;","nextElement",as.integer(n))
     if (length(n)==0) stop('StopIteration')
@@ -173,6 +168,7 @@ griffin.model.iterator <- function(controller,n=1) {
 #' @keywords internal
 #' 
 boolnet.model.iterator <- function(controller,n=1) {
+  if(  !("iterators" %in% (.packages()))  ) warning("iterators is not attached")
   nextEl <- function() {
     n <- .jcall(controller,returnSig = "[Ljava/lang/String;","nextElement",as.integer(n))
     if (length(n)==0) stop('StopIteration')

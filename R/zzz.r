@@ -1,20 +1,18 @@
-#' TODO:
-#' [ ] In documentation definition of r-graph
-#' [ ] Automathicaly detect griffin path
-#' 
-#' Future:
-#' [ ] add.gquery.mutant.cycle <- function(nodes, values, df){future}
-#' [ ] add.gquery.functions <- function(df) {future}
-#' [ ] add.gquery.labels  <- function(df) {future} 
-
-library(rJava)
+# TODO:
+# [ ] In documentation definition of r-graph
+# [ ] Automathicaly detect griffin path
+# 
+# Future:
+# [ ] add.gquery.mutant.cycle <- function(nodes, values, df){future}
+# [ ] add.gquery.functions <- function(df) {future}
+# [ ] add.gquery.labels  <- function(df) {future} 
 
 
 
 #' Initialize jvm 
 #' @keywords internal
 #' 
-.onAttach <- function(lib, pkg, ...) {
+.onLoad <- function(lib, pkg, ...) {
   griffin.path = paste0(system.file(package = "rGriffin"),"/java/")
   griffin.dirs = c("bin","lib")
   files = list.files(paste(griffin.path,griffin.dirs,sep=""),pattern="\\.jar$",full.names=TRUE)

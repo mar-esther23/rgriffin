@@ -1,8 +1,5 @@
 library("rGriffin")
 
-#griffin.path = Sys.getenv("GRIFFIN_HOME")
-#if (all.equal(griffin.path, "")) griffin.path = "/home/esther/griffin-0.1.6/"
-#rGriffin:::init.rjava.griffin(griffin.path)
 
 genes = c('a','b','c')
 inter = data.frame(source=c('a','b','b','c','c'), 

@@ -4,7 +4,7 @@
 \alias{init.griffin}
 \title{Initialize the Java Virtual Machine (JVM) and create a connection with griffin}
 \usage{
-init.griffin(jvm.param = "", force.init = TRUE)
+init.griffin(jvm.param = NULL, force.init = TRUE)
 }
 \arguments{
 \item{jvm.param}{string with parameters to initialize the jvm.}

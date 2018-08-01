@@ -29,12 +29,12 @@
 #' init.griffin("-XX:-UseGCOverheadLimit -Xmx2000m ")
 #' 
 #' @export
-init.griffin <- function(jvm.param="", force.init=TRUE) {
+init.griffin <- function(jvm.param=NULL, force.init=TRUE) {
   #Load all variables
   griffin.path = paste0(system.file(package = "rGriffin"),"/java/")
   griffin.dirs = c("bin","lib")
   files = list.files(paste(griffin.path,griffin.dirs,sep=""),pattern="\\.jar$",full.names=TRUE)
-  if (all.equal(jvm.param,"")) source(paste0(griffin.path,"jvm-param.R")) #load jvm.param from conf file
+  if (is.null(jvm.param)) source(paste0(griffin.path,"jvm-param.R")) #load jvm.param from conf file
   params = paste0(jvm.param, "-Dlog4j.configuration=file:",
                   griffin.path,"conf/log4j.properties")
   

@@ -7,9 +7,9 @@
 add.gquery.prohibited.attractors(j.query, df.prohibited.attr)
 }
 \arguments{
-\item{df.prohibited.attr}{dataframe with valid prohibited attractors}
+\item{j.query}{Griffin query}
 
-\item{query}{Griffin query}
+\item{df.prohibited.attr}{dataframe with valid prohibited attractors}
 }
 \value{
 query java query to run Griffin

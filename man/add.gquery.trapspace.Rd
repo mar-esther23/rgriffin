@@ -7,9 +7,9 @@
 add.gquery.trapspace(j.query, df.trapspace)
 }
 \arguments{
-\item{df.trapspace}{dataframe with valid trapspace}
+\item{j.query}{Griffin query}
 
-\item{query}{Griffin query}
+\item{df.trapspace}{dataframe with valid trapspace}
 }
 \value{
 query java query to run Griffin

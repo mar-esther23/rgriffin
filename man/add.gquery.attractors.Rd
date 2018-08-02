@@ -7,9 +7,9 @@
 add.gquery.attractors(j.query, df.attr)
 }
 \arguments{
-\item{df.attr}{dataframe with valid target attractors}
+\item{j.query}{Griffin query}
 
-\item{query}{Griffin query}
+\item{df.attr}{dataframe with valid target attractors}
 }
 \value{
 query java query to run Griffin

@@ -7,13 +7,13 @@
 add.gquery.mutant(j.query, mutant.nodes, mutant.values, df.mutant.attr)
 }
 \arguments{
+\item{j.query}{Griffin query}
+
 \item{mutant.nodes}{nodes whose value is fixed in the mutant}
 
 \item{mutant.values}{values of the nodes in the mutant}
 
 \item{df.mutant.attr}{dataframe with valid attractors}
-
-\item{query}{Griffin query}
 }
 \value{
 query java query to run Griffin

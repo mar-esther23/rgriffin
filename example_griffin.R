@@ -1,6 +1,5 @@
 library("rGriffin")
 
-
 genes = c('a','b','c')
 inter = data.frame(source=c('a','b','b','c','c'), 
                   target=c('b','b','c','b','c'), 

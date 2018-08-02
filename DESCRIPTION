@@ -16,6 +16,7 @@ Depends:
 Suggests: 
     BoolNet, 
     iterators, 
+    testthat,
     knitr,
     rmarkdown
 SystemRequirement: Java

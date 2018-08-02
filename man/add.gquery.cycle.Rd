@@ -7,9 +7,9 @@
 add.gquery.cycle(j.query, df.cycle)
 }
 \arguments{
-\item{df.cycle}{dataframe with cycle}
+\item{j.query}{Griffin query}
 
-\item{query}{Griffin query}
+\item{df.cycle}{dataframe with cycle}
 }
 \value{
 query java query to run Griffin

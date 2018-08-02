@@ -25,8 +25,7 @@
 #' @param force.init If set to TRUE JVM is re-initialized even if it is already running.
 #' 
 #' @example 
-#' #initialize griffin with only 2GB of RAM
-#' init.griffin("-XX:-UseGCOverheadLimit -Xmx2000m ")
+#' init.griffin("-XX:-UseGCOverheadLimit -Xmx2000m ") #initialize griffin with only 2GB of RAM
 #' 
 #' @export
 init.griffin <- function(jvm.param=NULL, force.init=TRUE) {
@@ -39,9 +38,9 @@ init.griffin <- function(jvm.param=NULL, force.init=TRUE) {
                   griffin.path,"conf/log4j.properties")
   
   #JVM initialization
-  .jinit(parameters=params)
-  .jaddClassPath(".")
-  .jaddClassPath(paste(griffin.path,"conf",sep=""))
-  for(f in files){ .jaddClassPath(f) }
+  rJava::.jinit(parameters=params)
+  rJava::.jaddClassPath(".")
+  rJava::.jaddClassPath(paste(griffin.path,"conf",sep=""))
+  for(f in files){ rJava::.jaddClassPath(f) }
 }
 

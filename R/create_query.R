@@ -21,11 +21,8 @@
 #'    OUSU: Optional, unknown sign, unambiguous
 #'    true: Tautology 
 #' 
-#' @param df.graph dataframe with source and target nodes and the type of interactions
+#' @param df.graph dataframe with source nodes, target nodes and the type of interactions
 #' @param nodes vector with all node names
-#' @param n_source name of column with source nodes, defaul='source'
-#' @param n_target name of column with target nodes, defaul='target'
-#' @param n_reg name of column with type of interaction, defaul='type'
 #' @return query java query to run Griffin
 #' 
 #' @examples
@@ -37,10 +34,16 @@
 #' > create.gquery.graph(inter, genes)
 #' @export
 #' 
-create.gquery.graph <- function(df.graph, nodes, n_source='source', n_target='target', n_reg='type') {
+create.gquery.graph <- function(df.graph, nodes) {
+  #check headers
+  colnames(df.graph) = c('source', 'target', 'type')
+  n_source = 'source'
+  n_target = 'target'
+  n_reg = 'type'
   # validate all nodes in gene list
   df.nodes = unique(c(df.graph[[n_source]], df.graph[[n_target]]))
-  if (! setequal(df.nodes, nodes)) stop("Unequeal nodes between interaction table and gene list")
+  if (! setequal(df.nodes, nodes)) stop("Unequal nodes between interaction table and gene list")
+
   # translate interactions + -
   df.graph[n_reg][df.graph[n_reg]=='+']<-'MPU'
   df.graph[n_reg][df.graph[n_reg]=='-']<-'MNU'
@@ -76,7 +79,7 @@ create.gquery.graph <- function(df.graph, nodes, n_source='source', n_target='ta
 #'    0: inactive
 #'    *: non-determined
 #'    
-#' @param query Griffin query
+#' @param j.query Griffin query
 #' @param df.attr dataframe with valid target attractors
 #' @return query java query to run Griffin
 #' 
@@ -112,7 +115,7 @@ add.gquery.attractors <- function(j.query, df.attr) {
 #'    0: inactive
 #'    *: non-determined
 #'    
-#' @param query Griffin query
+#' @param j.query Griffin query
 #' @param df.prohibited.attr dataframe with valid prohibited attractors
 #' @return query java query to run Griffin
 #' 
@@ -147,7 +150,7 @@ add.gquery.prohibited.attractors <- function(j.query, df.prohibited.attr) {
 #'    0: inactive
 #'    *: non-determined
 #'    
-#' @param query Griffin query
+#' @param j.query Griffin query
 #' @param df.cycle dataframe with cycle
 #' @return query java query to run Griffin
 #' 
@@ -180,7 +183,7 @@ add.gquery.cycle <- function(j.query, df.cycle) {
 #'    0: inactive
 #'    *: non-determined
 #'    
-#' @param query Griffin query
+#' @param j.query Griffin query
 #' @param mutant.nodes nodes whose value is fixed in the mutant
 #' @param mutant.values values of the nodes in the mutant
 #' @param df.mutant.attr dataframe with valid attractors
@@ -228,7 +231,7 @@ add.gquery.mutant <- function(j.query, mutant.nodes, mutant.values, df.mutant.at
 #'    0: inactive
 #'    *: non-determined
 #'    
-#' @param query Griffin query
+#' @param j.query Griffin query
 #' @param df.transition dataframe with valid states in order
 #' @return query java query to run Griffin
 #' 
@@ -263,7 +266,7 @@ add.gquery.transition <- function(j.query, df.transition) {
 #'    0: inactive
 #'    *: non-determined
 #'    
-#' @param query Griffin query
+#' @param j.query Griffin query
 #' @param df.trapspace dataframe with valid trapspace
 #' @return query java query to run Griffin
 #' 

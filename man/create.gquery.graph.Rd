@@ -4,19 +4,12 @@
 \alias{create.gquery.graph}
 \title{Create a Griffin query.}
 \usage{
-create.gquery.graph(df.graph, nodes, n_source = "source",
-  n_target = "target", n_reg = "type")
+create.gquery.graph(df.graph, nodes)
 }
 \arguments{
-\item{df.graph}{dataframe with source and target nodes and the type of interactions}
+\item{df.graph}{dataframe with source nodes, target nodes and the type of interactions}
 
 \item{nodes}{vector with all node names}
-
-\item{n_source}{name of column with source nodes, defaul='source'}
-
-\item{n_target}{name of column with target nodes, defaul='target'}
-
-\item{n_reg}{name of column with type of interaction, defaul='type'}
 }
 \value{
 query java query to run Griffin

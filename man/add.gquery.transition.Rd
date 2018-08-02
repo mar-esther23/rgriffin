@@ -7,9 +7,9 @@
 add.gquery.transition(j.query, df.transition)
 }
 \arguments{
-\item{df.transition}{dataframe with valid states in order}
+\item{j.query}{Griffin query}
 
-\item{query}{Griffin query}
+\item{df.transition}{dataframe with valid states in order}
 }
 \value{
 query java query to run Griffin

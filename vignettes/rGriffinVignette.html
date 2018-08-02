@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-08-01" />
+<meta name="date" content="2018-08-02" />
 
 <title>rGriffin</title>
 
@@ -72,10 +72,55 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <address class="author_afil">
 Instituto de Ecología, Universidad Nacional Autónoma de México<br><h4 class="author"><em>Stalin Muñoz</em></h4>
 <address class="author_afil">
-Centro de Ciencias de la Complejidad, Universidad Nacional Autónoma de México<br><h4 class="date"><em>2018-08-01</em></h4>
+Centro de Ciencias de la Complejidad, Universidad Nacional Autónoma de México<br><h4 class="date"><em>2018-08-02</em></h4>
 
 
 
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+</div>
+<div id="queries" class="section level1">
+<h1>Queries</h1>
+<div id="create-a-query" class="section level2">
+<h2>Create a query</h2>
+</div>
+<div id="add-restrictions-to-the-query" class="section level2">
+<h2>Add restrictions to the query</h2>
+</div>
+<div id="run-the-query" class="section level2">
+<h2>Run the query</h2>
+</div>
+</div>
+<div id="connect-to-other-packages" class="section level1">
+<h1>Connect to other packages</h1>
+<div id="boolnet" class="section level2">
+<h2>BoolNet</h2>
+<p>The R package includes various functions to import and export data to <code>BoolNet</code>.</p>
+<p>It is possible to obtain the topology of a <code>BooleanNetwork</code> object using <code>get.net.topology()</code>. This function determines the sign of each regulation as positive ‘+’, negative ‘-’ or ambiguous ‘MA’. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations ‘NR’.</p>
+<pre><code>library(BoolNet)
+data(&quot;cellcycle&quot;)
+topology &lt;- get.net.topology(cellcycle)
+topology</code></pre>
+<p>It is also possible to convert an <code>AttractorInfo</code> object into a data.frame using <code>attractor2dataframe</code>.</p>
+<pre><code>attr &lt;- getAttractors(cellcycle)
+attr.df &lt;- attractor2dataframe(attr)
+attr.df</code></pre>
+<p>Using this functions, it is possible to create a query that corresponds to a Boolean network.</p>
+<pre><code>q &lt;- create.gquery.graph(topology, cellcycle$genes)
+q &lt;- add.gquery.attractors(q, attr.df)
+print(q)</code></pre>
+<p>Export to BoolNet</p>
+<p>run.gquery</p>
+<p>dataframe2attractor</p>
+</div>
+<div id="other" class="section level2">
+<h2>Other</h2>
+<p>It is possible to plot the network topology dataframe with the R package igraph. This dataframe can also be used to import and export the network topology to other resources like the python library networkx or to the software cytoscape.</p>
+<p>It is possible to export the network functions as an SBML file using the BoolNet function toSBML().</p>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
 <p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
 <ul>
 <li>Never uses retina figures</li>
@@ -272,6 +317,7 @@ Centro de Ciencias de la Complejidad, Universidad Nacional Autónoma de México<
 <blockquote>
 <p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
 </blockquote>
+</div>
 </div>
 <div class="footnotes">
 <hr />

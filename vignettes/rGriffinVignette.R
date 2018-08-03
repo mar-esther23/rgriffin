@@ -4,6 +4,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+## ---- include = FALSE----------------------------------------------------
+library("rGriffin")
+
 ## ---- echo=TRUE----------------------------------------------------------
 genes = c('a','b','c')
 inter = data.frame(source=c('a','b','b','c','c'), 
@@ -65,7 +68,4 @@ q = add.gquery.attractors(q, attr)
 ## ---- echo=TRUE----------------------------------------------------------
 nets = run.gquery(q,return = "BoolNet")
 iterators::nextElem(nets)
-
-## ---- echo=TRUE, results='asis'------------------------------------------
-knitr::kable(head(mtcars, 10))
 

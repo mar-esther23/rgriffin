@@ -184,9 +184,12 @@ dataframe2attractor <- function(df, fixedGenes) {
   }
   node.names <- colnames(df)[c(-1,-2)]
   if (missing(fixedGenes)) {
-    fixedGenes <- rep(-1, length(attr$stateInfo$genes))
+    fixedGenes <- rep(-1, length(node.names))
     names(fixedGenes) <- node.names
   }
+  # the error is here
+  print(node.names)
+  print(fixedGenes)
   stateInfo = list( genes = node.names, fixedGenes = fixedGenes )
   
   result <- list( stateInfo = stateInfo,attractors = attractors )

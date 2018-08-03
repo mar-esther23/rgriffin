@@ -1,6 +1,7 @@
 # TODO:
 # [ ] In documentation definition of r-graph
-# [ ] Automathicaly detect griffin path
+# [ ] Function to take an attr.df and authomaticaly detect cycles and steady states
+# 
 # 
 # Future:
 # [ ] add.gquery.mutant.cycle <- function(nodes, values, df){future}

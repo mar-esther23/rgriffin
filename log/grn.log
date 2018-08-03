@@ -94,3 +94,24 @@
 08:54:31,991  INFO Griffin:427 - Total number of satisfying models found: 5
 08:54:32,043  INFO Griffin:611 - 0000000000,3,a;b;c,false;((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c));(~b&c),0;00101010;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
 08:54:32,080  INFO Griffin:611 - 0000000001,3,a;b;c,false;(((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:31:38,090  INFO Griffin:427 - Total number of satisfying models found: 0
+10:33:21,322  INFO Griffin:611 - 0000000000,3,a;b;c,false;((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c));(~b&c),0;00101010;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:21,498  INFO Griffin:611 - 0000000001,3,a;b;c,false;(((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:21,544  INFO Griffin:611 - 0000000002,3,a;b;c,false;((((((~a&b)&~c)|((~a&b)&c))|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00111011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:21,600  INFO Griffin:611 - 0000000003,3,a;b;c,false;((((~a&b)&~c)|((a&b)&~c))|((a&b)&c));(~b&c),0;00100011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:21,620  INFO Griffin:611 - 0000000004,3,a;b;c,false;((((((~a&b)&~c)|((a&~b)&~c))|((a&~b)&c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101111;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:21,626  INFO Griffin:427 - Total number of satisfying models found: 5
+10:33:21,656  INFO Griffin:611 - 0000000000,3,a;b;c,false;((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c));(~b&c),0;00101010;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:21,731  INFO Griffin:611 - 0000000001,3,a;b;c,false;(((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:33:33,772  INFO Griffin:611 - 0000000002,3,a;b;c,false;((((((~a&b)&~c)|((~a&b)&c))|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00111011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:36:37,985  INFO Griffin:427 - Total number of satisfying models found: 0
+10:37:31,160  INFO Griffin:427 - Total number of satisfying models found: 0
+10:46:46,009  INFO Griffin:611 - 0000000000,3,a;b;c,false;((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c));(~b&c),0;00101010;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:46:52,030  INFO Griffin:611 - 0000000001,3,a;b;c,false;(((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:47:02,332  INFO Griffin:611 - 0000000002,3,a;b;c,false;((((((~a&b)&~c)|((~a&b)&c))|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00111011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:47:27,751  INFO Griffin:611 - 0000000003,3,a;b;c,false;((((~a&b)&~c)|((a&b)&~c))|((a&b)&c));(~b&c),0;00100011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:47:29,128  INFO Griffin:611 - 0000000004,3,a;b;c,false;((((((~a&b)&~c)|((a&~b)&~c))|((a&~b)&c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101111;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:47:31,316  INFO Griffin:427 - Total number of satisfying models found: 5
+10:56:17,587  INFO Griffin:611 - 0000000000,3,a;b;c,false;((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c));(~b&c),0;00101010;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:56:17,632  INFO Griffin:611 - 0000000001,3,a;b;c,false;(((((~a&b)&~c)|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00101011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c
+10:56:34,160  INFO Griffin:611 - 0000000002,3,a;b;c,false;((((((~a&b)&~c)|((~a&b)&c))|((a&~b)&~c))|((a&b)&~c))|((a&b)&c));(~b&c),0;00111011;0100,3,1,000,1,001,1,010,5,a+b;b+b;b-c;c-b;c+c

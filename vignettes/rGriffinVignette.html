@@ -77,83 +77,91 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
 </div>
-<div id="queries" class="section level1">
-<h1>Queries</h1>
-<div id="create-a-query" class="section level2">
-<h2>Create a query</h2>
+<div id="queries" class="section level2">
+<h2>Queries</h2>
+<div id="create-a-query" class="section level3">
+<h3>Create a query</h3>
 </div>
-<div id="add-restrictions-to-the-query" class="section level2">
-<h2>Add restrictions to the query</h2>
+<div id="add-restrictions-to-the-query" class="section level3">
+<h3>Add restrictions to the query</h3>
 </div>
-<div id="run-the-query" class="section level2">
-<h2>Run the query</h2>
+<div id="run-the-query" class="section level3">
+<h3>Run the query</h3>
 </div>
 </div>
-<div id="connect-to-other-packages" class="section level1">
-<h1>Connect to other packages</h1>
-<div id="boolnet" class="section level2">
-<h2>BoolNet</h2>
+<div id="connect-to-other-packages" class="section level2">
+<h2>Connect to other packages</h2>
+<div id="boolnet" class="section level3">
+<h3>BoolNet</h3>
 <p>The R package includes various functions to import and export data to <code>BoolNet</code>.</p>
 <p>It is possible to obtain the topology of a <code>BooleanNetwork</code> object using <code>get.net.topology()</code>. This function determines the sign of each regulation as positive ‘+’, negative ‘-’ or ambiguous ‘MA’. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations ‘NR’.</p>
-<pre><code>library(BoolNet)
-data(&quot;cellcycle&quot;)
-topology &lt;- get.net.topology(cellcycle)
-topology</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BoolNet)
+<span class="kw">data</span>(<span class="st">&quot;cellcycle&quot;</span>)
+topology &lt;-<span class="st"> </span><span class="kw">get.net.topology</span>(cellcycle)
+topology
+<span class="co">#&gt;    Source Target Interaction</span>
+<span class="co">#&gt; 1    CycD   CycD           +</span>
+<span class="co">#&gt; 2    CycD     Rb           -</span>
+<span class="co">#&gt; 3    CycE     Rb           -</span>
+<span class="co">#&gt; 4    CycA     Rb           -</span>
+<span class="co">#&gt; 5     p27     Rb           +</span>
+<span class="co">#&gt; 6    CycB     Rb           -</span>
+<span class="co">#&gt; 7      Rb    E2F           -</span>
+<span class="co">#&gt; 8    CycA    E2F           -</span>
+<span class="co">#&gt; 9     p27    E2F           +</span>
+<span class="co">#&gt; 10   CycB    E2F           -</span>
+<span class="co">#&gt; 11     Rb   CycE           -</span>
+<span class="co">#&gt; 12    E2F   CycE           +</span>
+<span class="co">#&gt; 13     Rb   CycA           -</span>
+<span class="co">#&gt; 14    E2F   CycA           +</span>
+<span class="co">#&gt; 15   CycA   CycA           +</span>
+<span class="co">#&gt; 16  Cdc20   CycA           -</span>
+<span class="co">#&gt; 17   Cdh1   CycA           -</span>
+<span class="co">#&gt; 18 UbcH10   CycA           -</span>
+<span class="co">#&gt; 19   CycD    p27           -</span>
+<span class="co">#&gt; 20   CycE    p27           -</span>
+<span class="co">#&gt; 21   CycA    p27           -</span>
+<span class="co">#&gt; 22    p27    p27           +</span>
+<span class="co">#&gt; 23   CycB    p27           -</span>
+<span class="co">#&gt; 24   CycB  Cdc20           +</span>
+<span class="co">#&gt; 25   CycA   Cdh1           -</span>
+<span class="co">#&gt; 26    p27   Cdh1           +</span>
+<span class="co">#&gt; 27  Cdc20   Cdh1           +</span>
+<span class="co">#&gt; 28   CycB   Cdh1           -</span>
+<span class="co">#&gt; 29   CycA UbcH10           +</span>
+<span class="co">#&gt; 30  Cdc20 UbcH10           +</span>
+<span class="co">#&gt; 31   Cdh1 UbcH10           -</span>
+<span class="co">#&gt; 32 UbcH10 UbcH10           +</span>
+<span class="co">#&gt; 33   CycB UbcH10           +</span>
+<span class="co">#&gt; 34  Cdc20   CycB           -</span>
+<span class="co">#&gt; 35   Cdh1   CycB           -</span></code></pre></div>
 <p>It is also possible to convert an <code>AttractorInfo</code> object into a data.frame using <code>attractor2dataframe</code>.</p>
-<pre><code>attr &lt;- getAttractors(cellcycle)
-attr.df &lt;- attractor2dataframe(attr)
-attr.df</code></pre>
-<p>Using this functions, it is possible to create a query that corresponds to a Boolean network.</p>
+<pre><code>cc.attr &lt;- getAttractors(cellcycle)
+cycle &lt;- attractor2dataframe(cc.attr)
+cycle &lt;- attr.df[cellcycle$genes]
+cycle</code></pre>
+<p>Using this functions, it is possible to create a query that corresponds to a Boolean network. As we expect a cyclic attractor we will use <code>add.gquery.cycle()</code>.</p>
 <pre><code>q &lt;- create.gquery.graph(topology, cellcycle$genes)
-q &lt;- add.gquery.attractors(q, attr.df[cellcycle$genes])
+q &lt;- add.gquery.cycle(q, cycle)
 print(q)</code></pre>
-<p>Export to BoolNet</p>
-<p>run.gquery</p>
-<p>dataframe2attractor</p>
+<p>It is also possible to export the networks generated by <code>run.gquery()</code> directly to <code>BoolNet</code> with the option <code>return = &quot;BoolNet&quot;</code>. This option generates an iterator object, that returns the <code>BooleanNetwork</code> objects one by one using the function <code>iterators::nextElem()</code>.</p>
+<p>For example, if we use the three node example network:</p>
+<pre><code>nets = run.gquery(q,return = &quot;BoolNet&quot;)
+iterators::nextElem(nets)</code></pre>
+<p>If there are no more available networks the <code>nextElem()</code> method will rise an error: <code>Error in obj$nextElem() : StopIteration</code>.</p>
 </div>
-<div id="other" class="section level2">
-<h2>Other</h2>
-<p>It is possible to plot the network topology dataframe with the R package igraph. This dataframe can also be used to import and export the network topology to other resources like the python library networkx or to the software cytoscape.</p>
-<p>It is possible to export the network functions as an SBML file using the BoolNet function toSBML().</p>
+<div id="other" class="section level3">
+<h3>Other</h3>
+<p>It is possible to plot the network topology dataframe with the R package <code>igraph</code>. This dataframe can also be used to import and export the network topology to other resources like the python library <code>networkx</code> or to the software <code>Cytoscape</code>.</p>
+<p>It is possible to export the network functions as an SBML file using the <code>BoolNet</code> function <code>toSBML()</code>.</p>
 </div>
 </div>
-<div id="references" class="section level1">
-<h1>References</h1>
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
-<ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
-</ul>
-<div id="vignette-info" class="section level2">
-<h2>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
-</div>
-<div id="styles" class="section level2">
-<h2>Styles</h2>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
-</div>
-<div id="figures" class="section level2">
-<h2>Figures</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span>:<span class="dv">10</span>)
-<span class="kw">plot</span>(<span class="dv">10</span>:<span class="dv">1</span>)</code></pre></div>
-<p><img src="data:image/png;base64,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" /><img src="data:image/png;base64,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" /></p>
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes</code></pre>
-<p>Then you can use the chunk option <code>fig.cap = &quot;Your figure caption.&quot;</code> in <strong>knitr</strong>.</p>
-</div>
-<div id="more-examples" class="section level2">
-<h2>More Examples</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code>knitr::kable()</code>.</p>
+<div id="references" class="section level2">
+<h2>References</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">head</span>(mtcars, <span class="dv">10</span>))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -318,13 +326,6 @@ print(q)</code></pre>
 <blockquote>
 <p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
 </blockquote>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>A footnote here.<a href="#fnref1">↩</a></p></li>
-</ol>
 </div>
 
 

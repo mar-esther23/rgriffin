@@ -52,7 +52,7 @@ Incorporate multiple types of biological data with different levels of certanty.
 
 Search for patterns in the families of possible networks
 
-I
+IGriffin can be found in: http://turing.iimas.unam.mx/griffin/
 
 
 
@@ -256,14 +256,4 @@ It is possible to export the network functions as an SBML file using the `BoolNe
 
 ## References
 
-
-
-
-```{r, echo=TRUE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Muñoz, S., Carrillo, M., Azpeitia, E., & Rosenblueth, D. A. (2018). Griffin: A Tool for Symbolic Inference of Synchronous Boolean Molecular Networks. Frontiers in genetics, 9, 39.

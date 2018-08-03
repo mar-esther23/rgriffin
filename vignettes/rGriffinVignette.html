@@ -92,6 +92,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="queries" class="section level2">
 <h2>Queries</h2>
+<p>We are not iterating all possible networks, but determining the networks that satisfy our conditions.</p>
+<p>If there are more restrictions we expect less networks. We recommend beggining with more stringent queries and then relaxing the restrictions.</p>
+<p>The time that griffin will take depends on:</p>
+<ul>
+<li>Number of possible solutions</li>
+<li>The number of regulators of each node</li>
+</ul>
 <div id="create-a-query" class="section level3">
 <h3>Create a query</h3>
 <p>All queries start with a topology that describes the nodes and its interactions. The function <code>create.gquery.graph()</code> takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.</p>
@@ -134,9 +141,12 @@ inter
 <span class="co">#&gt; 3      b      c    -</span>
 <span class="co">#&gt; 4      c      b    -</span>
 <span class="co">#&gt; 5      c      c  OPU</span></code></pre></div>
-<p>We then create the query <code>q</code>. This creates an instance of the class query in the JVM. If you want to see the query use the <code>print</code> method.</p>
+<p>We then create the query <code>q</code>. This creates an instance of the class query in the JVM.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">create.gquery.graph</span>(inter, genes)
-<span class="kw">print</span>(q)
+q
+<span class="co">#&gt; [1] &quot;Java-Object{mx.unam.iimas.griffin.r.RGriffinQuery@1bba400}&quot;</span></code></pre></div>
+<p>If you want to see the query use the <code>print</code> method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(q)
 <span class="co">#&gt; Gene Regulation Specification</span>
 <span class="co">#&gt;  Set of genes: [a, b, c]</span>
 <span class="co">#&gt;  geneOrder: null</span>
@@ -170,9 +180,50 @@ inter
 </div>
 <div id="add-restrictions-to-the-query" class="section level3">
 <h3>Add restrictions to the query</h3>
+<p>It is possible to add more restrictions to the query. It is important to remember that if there are more restrictions we expect less networks.</p>
+<p>For example, suppose that we have some information about the expected cell types. We can add this restrictions as attractors.</p>
+<p>For example, suppose that we know that the attractors are:</p>
+<ul>
+<li>Only express <strong>b</strong> =&gt; c(0,1,0)</li>
+<li>Only express <strong>c</strong> =&gt; c(0,0,1)</li>
+</ul>
+<p>We can also add partial attractors where we lack information</p>
+<ul>
+<li>Do not express <strong>a</strong> or <strong>c</strong> but we have NO information or b =&gt; c(0,’*’,0)</li>
+</ul>
+<p>We codify this information as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">attr =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="st">'*'</span>,<span class="dv">0</span>), 
+                 <span class="dt">b=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>), 
+                 <span class="dt">c=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),
+                 <span class="dt">stringsAsFactors =</span> F )</code></pre></div>
+<p>We can add this information to the query with the <code>add.gquery.attractors()</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">add.gquery.attractors</span>(q, attr)</code></pre></div>
+<p>You can add aditional restrictions like:</p>
+<ul>
+<li><code>add.gquery.cycle()</code> Add target cycle</li>
+<li><code>add.gquery.mutant()</code> Add mutant with attractors</li>
+<li><code>add.gquery.prohibited.attractors()</code> Add prohibited attractors</li>
+<li><code>add.gquery.transition()</code> Add a transition between two succesive states</li>
+<li><code>add.gquery.trapspace()</code> Add a trapspace</li>
+</ul>
 </div>
 <div id="run-the-query" class="section level3">
 <h3>Run the query</h3>
+<p>Once you have created the query with <code>run.gquery()</code>. This function will return all the networks that satisfy the restrictions</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">run.gquery</span>(q)
+<span class="kw">print</span>(nets)
+<span class="co">#&gt; [1] &quot;targets,factors\na,false\nb,((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))\nc,(!b&amp;c)\n&quot;                         </span>
+<span class="co">#&gt; [2] &quot;targets,factors\na,false\nb,(((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;             </span>
+<span class="co">#&gt; [3] &quot;targets,factors\na,false\nb,((((((!a&amp;b)&amp;!c)|((!a&amp;b)&amp;c))|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;</span>
+<span class="co">#&gt; [4] &quot;targets,factors\na,false\nb,((((!a&amp;b)&amp;!c)|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;                           </span>
+<span class="co">#&gt; [5] &quot;targets,factors\na,false\nb,((((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;!b)&amp;c))|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;</span></code></pre></div>
+<p>The function <code>run.gquery()</code> includes multiple options that can be seen in the documentation. Some of the most important are:</p>
+<ul>
+<li><code>allow.hypothesis</code> activate or deactivate hypothetical regulations</li>
+<li><code>allow.additional.states</code> allows networks with additional fixed-point attractors to those specified in the query</li>
+<li><code>allow.additional.cycles</code> allows networks with additional cyclic attractors to those specified in the query</li>
+<li><code>return.network.limit</code> limit the maximum number of networks that the query will return</li>
+</ul>
 </div>
 </div>
 <div id="connect-to-other-packages" class="section level2">

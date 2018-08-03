@@ -67,6 +67,11 @@ The time that griffin will take depends on:
 * Number of possible solutions
 * The number of regulators of each node
 
+
+```{r, include = FALSE}
+library("rGriffin")
+```
+
 ### Create a query
 
 All queries start with a topology that describes the nodes and its interactions. The function `create.gquery.graph()` takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.

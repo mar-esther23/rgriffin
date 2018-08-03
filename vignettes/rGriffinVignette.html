@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-08-02" />
+<meta name="date" content="2018-08-03" />
 
 <title>rGriffin</title>
 
@@ -69,10 +69,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">rGriffin</h1>
 <h4 class="author"><em>Mariana E Martinez-Sanchez</em></h4>
-<address class="author_afil">
-Instituto de Ecología, Universidad Nacional Autónoma de México<br><h4 class="author"><em>Stalin Muñoz</em></h4>
-<address class="author_afil">
-Centro de Ciencias de la Complejidad, Universidad Nacional Autónoma de México<br><h4 class="date"><em>2018-08-02</em></h4>
+<h4 class="author"><em>Stalin Muñoz</em></h4>
+<h4 class="author"><em>Miguel Carrillo</em></h4>
+<h4 class="author"><em>Eugenio Azpeitia</em></h4>
+<h4 class="author"><em>David Rosenblueth</em></h4>
+<h4 class="date"><em>2018-08-03</em></h4>
 
 
 
@@ -107,7 +108,7 @@ attr.df &lt;- attractor2dataframe(attr)
 attr.df</code></pre>
 <p>Using this functions, it is possible to create a query that corresponds to a Boolean network.</p>
 <pre><code>q &lt;- create.gquery.graph(topology, cellcycle$genes)
-q &lt;- add.gquery.attractors(q, attr.df)
+q &lt;- add.gquery.attractors(q, attr.df[cellcycle$genes])
 print(q)</code></pre>
 <p>Export to BoolNet</p>
 <p>run.gquery</p>

@@ -2,10 +2,11 @@ Package: rGriffin
 Title: Gene Regulatory Interaction Formulator For Inquiring Networks
 Version: 0.1
 Authors@R: c(     
-    person("ME", "Martinez-Sanchez", 
-    email = "mar.esther23@gmail.com", 
-    role = c("aut", "cre")), 
-    person("S", "Muñoz", role = c("aut"))    )
+    person("ME", "Martinez-Sanchez",email = "mar.esther23@gmail.com",role = c("aut", "cre")), 
+    person("S", "Muñoz", role = c("aut")),
+    person("M", "Carrillo", role = c("aut")),
+    person("E", "Azpeitia", role = c("aut")),
+    person("D", "Rosenblueth", role = c("aut"))   )
 Description:
     The rgriffin package is an R connector to griffin (http://turing.iimas.unam.mx/griffin/). Gene Regulatory Interaction Formulator For Inquiring Networks (griffin) is a java library for inference and analysis of Boolean Network models. Griffin takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, griffin explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints.
     The rgriffin package includes a number of functions to interact with the BoolNet package.

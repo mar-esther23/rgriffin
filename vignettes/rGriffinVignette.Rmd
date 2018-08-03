@@ -2,11 +2,10 @@
 title: "rGriffin"
 author: 
 - name: Mariana E Martinez-Sanchez
-  affiliation: 
-  - Instituto de Ecología, Universidad Nacional Autónoma de México
 - name: Stalin Muñoz
-  affiliation:
-  - Centro de Ciencias de la Complejidad, Universidad Nacional Autónoma de México
+- name: Miguel Carrillo
+- name: Eugenio Azpeitia
+- name: David Rosenblueth
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

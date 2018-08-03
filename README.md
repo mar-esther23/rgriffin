@@ -7,9 +7,9 @@ The rgriffin package is an R connector to griffin (http://turing.iimas.unam.mx/g
 
 # Installation
 
-`rgriffin` depends on Java and rJava.
+rGriffin depends on Java and rJava.
 
-First, make sure you hva java installed, we recommend [Oracle JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html).
+First, make sure you have java installed, we recommend [Oracle JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html).
 
 
 Then install [rJava](https://cran.r-project.org/web/packages/rJava/index.html), this can be done from CRAN. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first.

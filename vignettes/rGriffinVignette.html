@@ -79,11 +79,94 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
+<p>Phenotype is the result of the interaction of multiple genes</p>
+<p>Boolean syncrolous networks are a simplification, proposed by kaufman nodes interactions state attractors</p>
+<p>Biological problem</p>
+<p>We can approximate the interaction graph and the attractors We are not sure of the functions</p>
+<p>Does the solution exist? Is there only one solution?</p>
+<p>Using a simple file interface, griffin takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, griffin explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints</p>
+<p>This allows to determine if the information is sufficient Find the models that satisfy the restrictions</p>
+<p>Incorporate multiple types of biological data with different levels of certanty.</p>
+<p>Search for patterns in the families of possible networks</p>
+<p>I</p>
 </div>
 <div id="queries" class="section level2">
 <h2>Queries</h2>
 <div id="create-a-query" class="section level3">
 <h3>Create a query</h3>
+<p>All queries start with a topology that describes the nodes and its interactions. The function <code>create.gquery.graph()</code> takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.</p>
+<p>Depending on the sign the interactions can <strong>positive</strong> or <strong>negative</strong>. If in every condition the regulation will have the same sign the interaction is <strong>ambiguous</strong>. However, if you are not sure if the regulation is positive or negative in all contexts you can say that the interaction is <strong>ambiguous</strong>. Depending on the degree of confidence in the existence of the interaction, the interactions can be: <strong>mandatory</strong> if you are sure the interaction will happen or <strong>optional</strong> if you suspect the interaction exists but you are not sure.</p>
+<p>The valid types of interctions are:</p>
+<ul>
+<li>false: Contradiction</li>
+<li>MA: Mandatory, ambiguous</li>
+<li>MPU (or +): Mandatory, positive, unambiguous</li>
+<li>MPPA: Mandatory, positive, possibly ambiguous</li>
+<li>MNU (or -): Mandatory, negative, unambiguous</li>
+<li>MNPA: Mandatory, negative, possibly ambiguous</li>
+<li>MUSU: Mandatory, unknown sign, unambiguous</li>
+<li>MUSPA: Mandatory, unknown sign, possibly ambiguous</li>
+<li>NR: No regulation</li>
+<li>OA: Optional, ambiguous</li>
+<li>OPU: Optional, positive, unambiguous</li>
+<li>OPPA: Optional, positive, possibly ambiguous</li>
+<li>ONU: Optional, negative, unambiguous</li>
+<li>ONPA: Optional, negative, possibly ambiguous</li>
+<li>OUSU: Optional, unknown sign, unambiguous</li>
+<li>true: Tautology</li>
+</ul>
+<p>For example, suppose a network where:</p>
+<ul>
+<li><strong>a</strong> activates <strong>b</strong></li>
+<li><strong>b</strong> and <strong>c</strong> inhibit each other</li>
+<li><strong>b</strong> and <strong>c</strong> <strong>may</strong> have a positive self-regulatory loops.</li>
+</ul>
+<p>We can codify this information as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes =<span class="st"> </span><span class="kw">c</span>(<span class="st">'a'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>)
+inter =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">source=</span><span class="kw">c</span>(<span class="st">'a'</span>,<span class="st">'b'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>,<span class="st">'c'</span>), 
+                  <span class="dt">target=</span><span class="kw">c</span>(<span class="st">'b'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>), 
+                  <span class="dt">type=</span><span class="kw">c</span>(<span class="st">'+'</span>,<span class="st">'OPU'</span>,<span class="st">'-'</span>,<span class="st">'-'</span>,<span class="st">'OPU'</span>),
+                    <span class="dt">stringsAsFactors =</span> F )
+inter
+<span class="co">#&gt;   source target type</span>
+<span class="co">#&gt; 1      a      b    +</span>
+<span class="co">#&gt; 2      b      b  OPU</span>
+<span class="co">#&gt; 3      b      c    -</span>
+<span class="co">#&gt; 4      c      b    -</span>
+<span class="co">#&gt; 5      c      c  OPU</span></code></pre></div>
+<p>We then create the query <code>q</code>. This creates an instance of the class query in the JVM. If you want to see the query use the <code>print</code> method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">create.gquery.graph</span>(inter, genes)
+<span class="kw">print</span>(q)
+<span class="co">#&gt; Gene Regulation Specification</span>
+<span class="co">#&gt;  Set of genes: [a, b, c]</span>
+<span class="co">#&gt;  geneOrder: null</span>
+<span class="co">#&gt;  Known regulations: None</span>
+<span class="co">#&gt;  Hypothetical regulations: None</span>
+<span class="co">#&gt;  Gene Interactions: [GeneInteraction [source=a, target=b, type=MPU], GeneInteraction [source=b, target=b, type=OPU], GeneInteraction [source=b, target=c, type=MNU], GeneInteraction [source=c, target=b, type=MNU], GeneInteraction [source=c, target=c, type=OPU]]</span>
+<span class="co">#&gt;  Stable states: None</span>
+<span class="co">#&gt;  Prohibited states: null</span>
+<span class="co">#&gt;  Known Regulators: None</span>
+<span class="co">#&gt;  Hypothetical Regulators: None</span>
+<span class="co">#&gt;  Extended regulators: None</span>
+<span class="co">#&gt;  Known Regulations: None</span>
+<span class="co">#&gt;  Hypothetical Regulations: None</span>
+<span class="co">#&gt;  Cyclic attractors: None</span>
+<span class="co">#&gt;  Input-output pairs: []</span>
+<span class="co">#&gt;  Subspaces: None</span>
+<span class="co">#&gt;  Mutant experiments: None</span>
+<span class="co">#&gt;  State transition rules: None</span>
+<span class="co">#&gt;  exactRegulations: false</span>
+<span class="co">#&gt;  additionalSteadyStates: false</span>
+<span class="co">#&gt;  divideQueryByTopology: false</span>
+<span class="co">#&gt;  topologyIteratorType: SEQUENTIAL</span>
+<span class="co">#&gt;  limitTopologyRange: false</span>
+<span class="co">#&gt;  limitToNumberOfNetworks: -1</span>
+<span class="co">#&gt;  topologyRange: None</span>
+<span class="co">#&gt;  topologicalDistanceRadius: 1</span>
+<span class="co">#&gt;  blockSteadyAPosteriory: false</span>
+<span class="co">#&gt;  additonalCycles: false</span>
+<span class="co">#&gt;  ambiguityNotAllowed: true</span>
+<span class="co">#&gt;  numberOfCycles:0</span></code></pre></div>
 </div>
 <div id="add-restrictions-to-the-query" class="section level3">
 <h3>Add restrictions to the query</h3>
@@ -139,18 +222,39 @@ topology
 <span class="co">#&gt; 34  Cdc20   CycB           -</span>
 <span class="co">#&gt; 35   Cdh1   CycB           -</span></code></pre></div>
 <p>It is also possible to convert an <code>AttractorInfo</code> object into a data.frame using <code>attractor2dataframe</code>.</p>
-<pre><code>cc.attr &lt;- getAttractors(cellcycle)
-cycle &lt;- attractor2dataframe(cc.attr)
-cycle &lt;- attr.df[cellcycle$genes]
-cycle</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cc.attr &lt;-<span class="st"> </span><span class="kw">getAttractors</span>(cellcycle)
+cycle &lt;-<span class="st"> </span><span class="kw">attractor2dataframe</span>(cc.attr)
+cycle &lt;-<span class="st"> </span>cycle[cellcycle$genes] <span class="co">#remove info columns</span>
+cycle
+<span class="co">#&gt;   CycD Rb E2F CycE CycA p27 Cdc20 Cdh1 UbcH10 CycB</span>
+<span class="co">#&gt; 1    0  1   0    0    0   1     0    1      0    0</span>
+<span class="co">#&gt; 2    1  0   0    1    1   0     0    0      0    0</span>
+<span class="co">#&gt; 3    1  0   0    0    1   0     0    0      1    1</span>
+<span class="co">#&gt; 4    1  0   0    0    1   0     1    0      1    1</span>
+<span class="co">#&gt; 5    1  0   0    0    0   0     1    1      1    0</span>
+<span class="co">#&gt; 6    1  0   1    0    0   0     0    1      1    0</span>
+<span class="co">#&gt; 7    1  0   1    1    0   0     0    1      0    0</span>
+<span class="co">#&gt; 8    1  0   1    1    1   0     0    1      0    0</span></code></pre></div>
 <p>Using this functions, it is possible to create a query that corresponds to a Boolean network. As we expect a cyclic attractor we will use <code>add.gquery.cycle()</code>.</p>
-<pre><code>q &lt;- create.gquery.graph(topology, cellcycle$genes)
-q &lt;- add.gquery.cycle(q, cycle)
-print(q)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q &lt;-<span class="st"> </span><span class="kw">create.gquery.graph</span>(topology, cellcycle$genes)
+q &lt;-<span class="st"> </span><span class="kw">add.gquery.cycle</span>(q, cycle)</code></pre></div>
 <p>It is also possible to export the networks generated by <code>run.gquery()</code> directly to <code>BoolNet</code> with the option <code>return = &quot;BoolNet&quot;</code>. This option generates an iterator object, that returns the <code>BooleanNetwork</code> objects one by one using the function <code>iterators::nextElem()</code>.</p>
 <p>For example, if we use the three node example network:</p>
-<pre><code>nets = run.gquery(q,return = &quot;BoolNet&quot;)
-iterators::nextElem(nets)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">run.gquery</span>(q,<span class="dt">return =</span> <span class="st">&quot;BoolNet&quot;</span>)
+<span class="co">#&gt; Warning in boolnet.model.iterator(controller): iterators is not attached</span>
+iterators::<span class="kw">nextElem</span>(nets)
+<span class="co">#&gt; Boolean network with 3 genes</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Involved genes:</span>
+<span class="co">#&gt; a b c</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Transition functions:</span>
+<span class="co">#&gt; a = 0</span>
+<span class="co">#&gt; b = ((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))</span>
+<span class="co">#&gt; c = (!b&amp;c)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Knocked-out and over-expressed genes:</span>
+<span class="co">#&gt; a = 0</span></code></pre></div>
 <p>If there are no more available networks the <code>nextElem()</code> method will rise an error: <code>Error in obj$nextElem() : StopIteration</code>.</p>
 </div>
 <div id="other" class="section level3">

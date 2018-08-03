@@ -24,13 +24,160 @@ knitr::opts_chunk$set(
 ## Introduction
 
 
+
+Phenotype is the result of the interaction of multiple genes
+
+Boolean syncrolous networks are a simplification, 
+proposed by kaufman
+nodes
+interactions
+state
+attractors
+
+Biological problem
+
+
+We can approximate the interaction graph and the attractors
+We are not sure of the functions
+
+Does the solution exist?
+Is there only one solution?
+
+Using a simple file interface, griffin takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, griffin explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints
+
+This allows to determine if the information is sufficient
+Find the models that satisfy the restrictions
+
+Incorporate multiple types of biological data with different levels of certanty.
+
+Search for patterns in the families of possible networks
+
+I
+
+
+
 ## Queries
+
+We are not iterating all possible networks, but determining the networks that satisfy our conditions. 
+
+If there are more restrictions we expect less networks. We recommend beggining with more stringent queries and then relaxing the restrictions.
+
+The time that griffin will take depends on:
+
+* Number of possible solutions
+* The number of regulators of each node
 
 ### Create a query
 
+All queries start with a topology that describes the nodes and its interactions. The function `create.gquery.graph()` takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.
+
+Depending on the sign the interactions can **positive** or **negative**. If in every condition the regulation will have the same sign the interaction is **ambiguous**. However, if you are not sure if the regulation is positive or negative in all contexts you can say that the interaction is **ambiguous**.  Depending on the degree of confidence in the existence of the interaction, the interactions can be: **mandatory** if you are sure the interaction will happen or **optional** if you suspect the interaction exists but you are not sure.
+
+The valid types of interctions are: 
+
+* false: Contradiction 
+* MA: Mandatory, ambiguous 
+* MPU (or +): Mandatory, positive, unambiguous 
+* MPPA: Mandatory, positive, possibly ambiguous 
+* MNU (or -): Mandatory, negative, unambiguous 
+* MNPA: Mandatory, negative, possibly ambiguous 
+* MUSU: Mandatory, unknown sign, unambiguous 
+* MUSPA: Mandatory, unknown sign, possibly ambiguous 
+* NR: No regulation 
+* OA: Optional, ambiguous 
+* OPU: Optional, positive, unambiguous 
+* OPPA: Optional, positive, possibly ambiguous 
+* ONU: Optional, negative, unambiguous 
+* ONPA: Optional, negative, possibly ambiguous 
+* OUSU: Optional, unknown sign, unambiguous 
+* true: Tautology
+
+For example, suppose a network where:
+
+* **a** activates **b**
+* **b** and **c** inhibit each other
+* **b** and **c** __may__ have a positive self-regulatory loops.
+
+We can codify this information as:
+
+```{r, echo=TRUE}
+genes = c('a','b','c')
+inter = data.frame(source=c('a','b','b','c','c'), 
+                  target=c('b','b','c','b','c'), 
+                  type=c('+','OPU','-','-','OPU'),
+                    stringsAsFactors = F )
+inter
+```
+
+We then create the query `q`. This creates an instance of the class query in the JVM. 
+
+```{r, echo=TRUE}
+q = create.gquery.graph(inter, genes)
+q
+```
+
+If you want to see the query use the `print` method.
+
+```{r, echo=TRUE}
+print(q)
+```
+
+
 ### Add restrictions to the query
 
+It is possible to add more restrictions to the query. It is important to remember that 
+if there are more restrictions we expect less networks. 
+
+For example, suppose that we have some information about the expected cell types. We can add this restrictions as attractors.
+
+For example, suppose that we know that the attractors are:
+
+* Only express __b__ => c(0,1,0)
+* Only express __c__ => c(0,0,1)
+
+We can also add partial attractors where we lack information
+
+* Do not express __a__ or __c__ but we have NO information or b => c(0,'*',0)
+
+We codify this information as:
+
+```{r, echo=TRUE}
+attr = data.frame(a=c(0,'*',0), 
+                 b=c(0,1,0), 
+                 c=c(0,0,1),
+                 stringsAsFactors = F )
+```
+
+We can add this information to the query with the `add.gquery.attractors()` function:
+
+```{r, echo=TRUE}
+q = add.gquery.attractors(q, attr)
+```
+
+You can add aditional restrictions like:
+
+* `add.gquery.cycle()`	Add target cycle 
+* `add.gquery.mutant()`	Add mutant with attractors 
+* `add.gquery.prohibited.attractors()`	Add prohibited attractors
+* `add.gquery.transition()`	Add a transition between two succesive states
+* `add.gquery.trapspace()`	Add a trapspace
+
+
 ### Run the query
+
+Once you have created the query with `run.gquery()`. This function will return all the networks that satisfy the restrictions
+
+```{r, echo=TRUE}
+nets = run.gquery(q)
+print(nets)
+```
+
+The function `run.gquery()` includes multiple options that can be seen in the documentation. Some of the most important are:
+
+* `allow.hypothesis`	activate or deactivate hypothetical regulations
+* `allow.additional.states`	allows networks with additional fixed-point attractors to those specified in the query
+* `allow.additional.cycles`	allows networks with additional cyclic attractors to those specified in the query
+* `return.network.limit` limit the maximum number of networks that the query will return
 
 
 
@@ -54,7 +201,7 @@ It is also possible to convert an `AttractorInfo` object into a data.frame using
 ```{r, echo=TRUE}
 cc.attr <- getAttractors(cellcycle)
 cycle <- attractor2dataframe(cc.attr)
-cycle <- attr.df[cellcycle$genes]
+cycle <- cycle[cellcycle$genes] #remove info columns
 cycle
 ```
 
@@ -63,7 +210,6 @@ Using this functions, it is possible to create a query that corresponds to a Boo
 ```{r, echo=TRUE}
 q <- create.gquery.graph(topology, cellcycle$genes)
 q <- add.gquery.cycle(q, cycle)
-print(q)
 ```
 
 It is also possible to export the networks generated by `run.gquery()` directly to `BoolNet` with the option `return = "BoolNet"`. This option generates an iterator object, that returns the `BooleanNetwork` objects one by one using the function `iterators::nextElem()`. 

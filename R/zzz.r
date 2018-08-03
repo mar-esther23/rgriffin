@@ -1,15 +1,3 @@
-# TODO:
-# [ ] In documentation definition of r-graph
-# [ ] Function to take an attr.df and authomaticaly detect cycles and steady states
-# 
-# 
-# Future:
-# [ ] add.gquery.mutant.cycle <- function(nodes, values, df){future}
-# [ ] add.gquery.functions <- function(df) {future}
-# [ ] add.gquery.labels  <- function(df) {future} 
-
-
-
 #' Initialize jvm 
 #' @keywords internal
 #' 

@@ -1,4 +1,4 @@
-# rgriffin : R Gene Regulatory Interaction Formulator For Inquiring Networks
+# rGriffin : R Gene Regulatory Interaction Formulator For Inquiring Networks
 
 Boolean networks allow us to give a mechanistic explanation to how cell types emerge from regulatory networks. However, inferring the regulatory network and its functions is complex problem, as the available information is often incomplete. [`rGriffin`](https://github.com/mar-esther23/rgriffin) uses available biological information (regulatory interactions, cell types, mutants) codified as a set of restrictions and returns the [Boolean Networks](https://en.wikipedia.org/wiki/Boolean_network) that satisfy that restrictions. This Boolean networks can then be used to study the biological system.
 

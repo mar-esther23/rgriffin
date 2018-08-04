@@ -23,54 +23,21 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
+Boolean networks allow us to give a mechanistic explanation to how cell types emerge from regulatory networks. However, inferring the regulatory network and its functions is complex problem, as the available information is often incomplete. [`rGriffin`](https://github.com/mar-esther23/rgriffin) uses available biological information (regulatory interactions, cell types, mutants) codified as a set of restrictions and returns the [Boolean Networks](https://en.wikipedia.org/wiki/Boolean_network) that satisfy that restrictions. This Boolean networks can then be used to study the biological system.
 
-
-Phenotype is the result of the interaction of multiple genes
-
-Boolean syncrolous networks are a simplification, 
-proposed by kaufman
-nodes
-interactions
-state
-attractors
-
-Biological problem
-
-
-We can approximate the interaction graph and the attractors
-We are not sure of the functions
-
-Does the solution exist?
-Is there only one solution?
-
-Using a simple file interface, griffin takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, griffin explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints
-
-This allows to determine if the information is sufficient
-Find the models that satisfy the restrictions
-
-Incorporate multiple types of biological data with different levels of certanty.
-
-Search for patterns in the families of possible networks
-
-IGriffin can be found in: http://turing.iimas.unam.mx/griffin/
+The `rGriffin` package is an R connector to [`Griffin`](http://turing.iimas.unam.mx/griffin/) (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. `Griffin` takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, `Griffin` explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The`rGriffin` package includes a number of functions to interact with the BoolNet package.
 
 
 
 ## Queries
 
-We are not iterating all possible networks, but determining the networks that satisfy our conditions. 
+The first step is to attach `rGriffin`. This will initialize the Java Virtual Machine and start `Griffin` with the default JVM options.
 
-If there are more restrictions we expect less networks. We recommend beggining with more stringent queries and then relaxing the restrictions.
-
-The time that griffin will take depends on:
-
-* Number of possible solutions
-* The number of regulators of each node
-
-
-```{r, include = FALSE}
+```{r}
 library("rGriffin")
 ```
+
+If you want to initialize the JVM with different options like more memory see the functions `init.griffin()`. It is also posible to modify the default parameters changing the file "rGriffin/java/jvm-param.R".
 
 ### Create a query
 
@@ -142,7 +109,7 @@ For example, suppose that we know that the attractors are:
 
 We can also add partial attractors where we lack information
 
-* Do not express __a__ or __c__ but we have NO information or b => c(0,'*',0)
+* Do not express __a__ or __c__ but we have NO information on __b__ => c(0,'*',0)
 
 We codify this information as:
 

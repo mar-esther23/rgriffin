@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-08-03" />
+<meta name="date" content="2018-08-04" />
 
 <title>rGriffin</title>
 
@@ -73,32 +73,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h4 class="author"><em>Miguel Carrillo</em></h4>
 <h4 class="author"><em>Eugenio Azpeitia</em></h4>
 <h4 class="author"><em>David Rosenblueth</em></h4>
-<h4 class="date"><em>2018-08-03</em></h4>
+<h4 class="date"><em>2018-08-04</em></h4>
 
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Phenotype is the result of the interaction of multiple genes</p>
-<p>Boolean syncrolous networks are a simplification, proposed by kaufman nodes interactions state attractors</p>
-<p>Biological problem</p>
-<p>We can approximate the interaction graph and the attractors We are not sure of the functions</p>
-<p>Does the solution exist? Is there only one solution?</p>
-<p>Using a simple file interface, griffin takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, griffin explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints</p>
-<p>This allows to determine if the information is sufficient Find the models that satisfy the restrictions</p>
-<p>Incorporate multiple types of biological data with different levels of certanty.</p>
-<p>Search for patterns in the families of possible networks</p>
-<p>IGriffin can be found in: <a href="http://turing.iimas.unam.mx/griffin/" class="uri">http://turing.iimas.unam.mx/griffin/</a></p>
+<p>Boolean networks allow us to give a mechanistic explanation to how cell types emerge from regulatory networks. However, inferring the regulatory network and its functions is complex problem, as the available information is often incomplete. <a href="https://github.com/mar-esther23/rgriffin"><code>rGriffin</code></a> uses available biological information (regulatory interactions, cell types, mutants) codified as a set of restrictions and returns the <a href="https://en.wikipedia.org/wiki/Boolean_network">Boolean Networks</a> that satisfy that restrictions. This Boolean networks can then be used to study the biological system.</p>
+<p>The <code>rGriffin</code> package is an R connector to <a href="http://turing.iimas.unam.mx/griffin/"><code>Griffin</code></a> (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. <code>Griffin</code> takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, <code>Griffin</code> explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The<code>rGriffin</code> package includes a number of functions to interact with the BoolNet package.</p>
 </div>
 <div id="queries" class="section level2">
 <h2>Queries</h2>
-<p>We are not iterating all possible networks, but determining the networks that satisfy our conditions.</p>
-<p>If there are more restrictions we expect less networks. We recommend beggining with more stringent queries and then relaxing the restrictions.</p>
-<p>The time that griffin will take depends on:</p>
-<ul>
-<li>Number of possible solutions</li>
-<li>The number of regulators of each node</li>
-</ul>
+<p>The first step is to attach <code>rGriffin</code>. This will initialize the Java Virtual Machine and start <code>Griffin</code> with the default JVM options.</p>
+<p>If you want to initialize the JVM with different options like more memory see the functions <code>init.griffin()</code>. It is also posible to modify the default parameters changing the file “rGriffin/java/jvm-param.R”.</p>
 <div id="create-a-query" class="section level3">
 <h3>Create a query</h3>
 <p>All queries start with a topology that describes the nodes and its interactions. The function <code>create.gquery.graph()</code> takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.</p>
@@ -189,7 +176,7 @@ q
 </ul>
 <p>We can also add partial attractors where we lack information</p>
 <ul>
-<li>Do not express <strong>a</strong> or <strong>c</strong> but we have NO information or b =&gt; c(0,’*’,0)</li>
+<li>Do not express <strong>a</strong> or <strong>c</strong> but we have NO information on <strong>b</strong> =&gt; c(0,’*’,0)</li>
 </ul>
 <p>We codify this information as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">attr =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="st">'*'</span>,<span class="dv">0</span>), 

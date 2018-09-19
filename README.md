@@ -16,7 +16,7 @@ First, make sure you have java installed, we recommend [Oracle JDK 8](https://do
 Then install [rJava](https://cran.r-project.org/web/packages/rJava/index.html), this can be done from CRAN. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first.
 	
 ```
-> install.packages(Rjava)
+> install.packages(rJava)
 ```
 
 Finally, install rgriffin from github using devtools

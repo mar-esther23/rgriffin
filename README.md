@@ -54,18 +54,18 @@ inter = data.frame(source=c('a','b','c',’b’,'c'),
                   target=c('b'','c','b','b,'c'), 
                   type=c('+','-','-','OPU','OPU'),
                     stringsAsFactors = F )
-q = create.gquery.graph(inter, genes)
+q = createGqueryGraph(inter, genes)
 attr = data.frame(a=c(0,'*',0), 
                  b=c(0,1,0), 
                  c=c(0,0,1),
                  stringsAsFactors = F )
-q = add.gquery.attractors(q, attr)
+q = addGqueryAttractors(q, attr)
 ```
 
 Then we can use `Griffin` to find the networks that behave according with our biological information. 
 
 ```
-nets = run.gquery(q)
+nets = runGquery(q)
 nets
 ```
 
@@ -77,13 +77,13 @@ nets
 "targets,factors\na,false\nb,((((!a&b)&!c)|((a&b)&!c))|((a&b)&c))\nc,(!b&c)\n"
 ```
 
-There are multiple options to integrate `BoolNet` and `rGriffin`. The function `get.net.topology()` can obtain the topology with interaction signs of a BoolNet network. The function `attractor2dataframe()` can be used to export a BoolNet attractor as a dataframe that `rGriffin` can use. The function `run.gquery()` includes the option `return=’BoolNet’`, that return the inferred networks as `BoolNet` networks.
+There are multiple options to integrate `BoolNet` and `rGriffin`. The function `getNetTopology()` can obtain the topology with interaction signs of a BoolNet network. The function `attractorToDataframe()` can be used to export a BoolNet attractor as a dataframe that `rGriffin` can use. The function `runGquery()` includes the option `return=’BoolNet’`, that return the inferred networks as `BoolNet` networks.
 
 
 
 ## History
 
-The development of [`Griffin`](http://turing.iimas.unam.mx/griffin/) began in <> to solve <>. During the next years `Griffin` continued to be developed by <> with comments from <>.
+The development of [`Griffin`](http://turing.iimas.unam.mx/griffin/) began in 2013 as a PAPIIT (Programa de Apoyo a Proyectos de Investigación e Innovación Tecnológica) project to solve the inference of Boolean Network models for the Arabidopsis thaliana root stem cell niche. It continued in 2015 with support of Conacyt grant 221341.
 
 In January, 2017 we organized a course in [C3-UNAM](https://www.c3.unam.mx) to teach biologist how to use `Griffin`. We received two main comments: the input format was too complicated and it was uncomfortable to use the output with other packages. After some consideration we decided to create an `R` wrapper that could export and import `BoolNet` networks. We selected `BoolNet` as it has an good documentation and the package `BoolFilter` had been designed to work with it.
 

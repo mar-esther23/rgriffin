@@ -4,7 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ---- include = FALSE----------------------------------------------------
+## ------------------------------------------------------------------------
 library("rGriffin")
 
 ## ---- echo=TRUE----------------------------------------------------------
@@ -16,7 +16,7 @@ inter = data.frame(source=c('a','b','b','c','c'),
 inter
 
 ## ---- echo=TRUE----------------------------------------------------------
-q = create.gquery.graph(inter, genes)
+q = createGqueryGraph(inter, genes)
 q
 
 ## ---- echo=TRUE----------------------------------------------------------
@@ -29,27 +29,27 @@ attr = data.frame(a=c(0,'*',0),
                  stringsAsFactors = F )
 
 ## ---- echo=TRUE----------------------------------------------------------
-q = add.gquery.attractors(q, attr)
+q = addGqueryAttractors(q, attr)
 
 ## ---- echo=TRUE----------------------------------------------------------
-nets = run.gquery(q)
+nets = runGquery(q)
 print(nets)
 
 ## ---- echo=TRUE----------------------------------------------------------
 library(BoolNet)
 data("cellcycle")
-topology <- get.net.topology(cellcycle)
+topology <- getNetTopology(cellcycle)
 topology
 
 ## ---- echo=TRUE----------------------------------------------------------
 cc.attr <- getAttractors(cellcycle)
-cycle <- attractor2dataframe(cc.attr)
+cycle <- attractorToDataframe(cc.attr)
 cycle <- cycle[cellcycle$genes] #remove info columns
 cycle
 
 ## ---- echo=TRUE----------------------------------------------------------
-q <- create.gquery.graph(topology, cellcycle$genes)
-q <- add.gquery.cycle(q, cycle)
+q <- createGqueryGraph(topology, cellcycle$genes)
+q <- addGqueryCycle(q, cycle)
 
 ## ---- include = FALSE----------------------------------------------------
 genes = c('a','b','c')
@@ -57,15 +57,15 @@ inter = data.frame(source=c('a','b','b','c','c'),
                   target=c('b','b','c','b','c'), 
                   type=c('+','+','-','-','+'),
                     stringsAsFactors = F )
-q = create.gquery.graph(inter, genes)
+q = createGqueryGraph(inter, genes)
 
 attr = data.frame(a=c(0,'*',0), 
                  b=c(0,1,0), 
                  c=c(0,0,1),
                  stringsAsFactors = F )
-q = add.gquery.attractors(q, attr)
+q = addGqueryAttractors(q, attr)
 
 ## ---- echo=TRUE----------------------------------------------------------
-nets = run.gquery(q,return = "BoolNet")
+nets = runGquery(q,return = "BoolNet")
 iterators::nextElem(nets)
 

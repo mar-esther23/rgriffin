@@ -2,7 +2,7 @@
 #' @keywords internal
 #' 
 .onLoad <- function(lib, pkg, ...) {
-  init.griffin(force.init=FALSE)
+  initGriffin(force.init=FALSE)
 }
 
 #' Initialize the Java Virtual Machine (JVM) and create a connection with griffin
@@ -17,7 +17,7 @@
 #' init.griffin("-XX:-UseGCOverheadLimit -Xmx2000m ") #initialize griffin with only 2GB of RAM
 #' 
 #' @export
-init.griffin <- function(jvm.param=NULL, force.init=TRUE) {
+initGriffin <- function(jvm.param=NULL, force.init=TRUE) {
   #Load all variables
   griffin.path = paste0(system.file(package = "rGriffin"),"/java/")
   griffin.dirs = c("bin","lib")
@@ -33,3 +33,30 @@ init.griffin <- function(jvm.param=NULL, force.init=TRUE) {
   for(f in files){ rJava::.jaddClassPath(f) }
 }
 
+
+#' print query
+#' @keywords internal
+#' @export
+print.jobjRef <- function(j.query) {
+  text = .jcall(j.query,returnSig = "S","asString",evalString = TRUE)
+  text = gsub('^.|.$', '', text)
+  text = gsub("Gene Regulation Specification. ", "Gene Regulation Specification; ", text)
+  text = gsub(" = true", "=1", text)
+  text = gsub(" = false", "=0", text)
+  text = gsub(";", "\n", text)
+  cat(text)
+}
+
+#' setClass("gquery",contains = "jobjRef")
+#' 
+#' #' print query
+#' #' @export
+#' print.gquery <- function(j.query) {
+#'   text = .jcall(j.query,returnSig = "S","asString",evalString = TRUE)
+#'   text = gsub('^.|.$', '', text)
+#'   text = gsub("Gene Regulation Specification. ", "Gene Regulation Specification; ", text)
+#'   text = gsub(" = true", "=1", text)
+#'   text = gsub(" = false", "=0", text)
+#'   text = gsub(";", "\n", text)
+#'   cat(text)
+#' }

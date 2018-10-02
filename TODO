@@ -1,9 +1,10 @@
 TODO:
 [ ] In documentation definition of r-graph
 [ ] Function to take an attr.df and authomaticaly detect cycles and steady states
-[ ] Improve pretty printing, maybe method to return query as df and then print
+[ ] Return attractors and basins
+[ ] Improve pretty printing, maybe method to return query as df and then print?
+[ ] addGqueryFunctions <- function(df) {future}
 
 Future:
-[ ] add.gquery.mutant.cycle <- function(nodes, values, df){future}
-[ ] add.gquery.functions <- function(df) {future}
-[ ] add.gquery.labels  <- function(df) {future} 
+[ ] addGqueryMutantCycle <- function(nodes, values, df){future}
+[ ] addGqueryLabels  <- function(df) {future} 

@@ -31,10 +31,10 @@
 #'                      target=c('b','b','c','b','c'), 
 #'                      type=c('+','+','+','-','+'),
 #'                      stringsAsFactors = F )
-#' > create.gquery.graph(inter, genes)
+#' > createGqueryGraph(inter, genes)
 #' @export
 #' 
-create.gquery.graph <- function(df.graph, nodes) {
+createGqueryGraph <- function(df.graph, nodes) {
   #check headers
   colnames(df.graph) = c('source', 'target', 'type')
   n_source = 'source'
@@ -88,12 +88,12 @@ create.gquery.graph <- function(df.graph, nodes) {
 #'                   b=c(0,1,0,'*'), 
 #'                   c=c(0,0,1,0),
 #'                   stringsAsFactors = F )
-#' q = add.gquery.attractors(q, attr)
+#' q = addGqueryAttractors(q, attr)
 #' @export
 #' 
-add.gquery.attractors <- function(j.query, df.attr) {
+addGqueryAttractors <- function(j.query, df.attr) {
   nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.attr = validate.states(df.attr, nodes)
+  df.attr = validateStates(df.attr, nodes)
   
   # iterate over attractors and send to query
   apply(df.attr, 1, function(x) {
@@ -122,13 +122,13 @@ add.gquery.attractors <- function(j.query, df.attr) {
 #' @examples
 #' attr.prohibited = data.frame(a=c('*'), b=c(1), c=c(1),
 #'                   stringsAsFactors = F )
-#' q = add.gquery.prohibited.attractors(q, attr.prohibited)
+#' q = addGqueryProhibitedAttractors(q, attr.prohibited)
 #' @export
 #' 
-add.gquery.prohibited.attractors <- function(j.query, df.prohibited.attr) {
+addGqueryProhibitedAttractors <- function(j.query, df.prohibited.attr) {
   #first get valid genes from query
   nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.prohibited.attr = validate.states(df.prohibited.attr, nodes)
+  df.prohibited.attr = validateStates(df.prohibited.attr, nodes)
   
   # iterate over attractors and send to query
   apply(df.prohibited.attr, 1, function(x) {
@@ -157,13 +157,13 @@ add.gquery.prohibited.attractors <- function(j.query, df.prohibited.attr) {
 #' @examples
 #' cycle = data.frame(a=c(0,0), b=c(0,1), c=c(1,0),
 #'                   stringsAsFactors = F )
-#' q = add.gquery.cycle(q, cycle)
+#' q = addGqueryCycle(q, cycle)
 #' @export
 #' 
-add.gquery.cycle <- function(j.query, df.cycle) {
+addGqueryCycle <- function(j.query, df.cycle) {
   #first get valid genes from query
   nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.cycle = validate.states(df.cycle, nodes)
+  df.cycle = validateStates(df.cycle, nodes)
   df.cycle = apply(df.cycle, 1, function(x) x = paste(x, collapse = ''))
   .jcall(j.query,returnSig = "V","addAttractor", df.cycle)
   # TODO
@@ -195,23 +195,23 @@ add.gquery.cycle <- function(j.query, df.cycle) {
 #' mutant.value = c(1) 
 #' mutant.attr = data.frame(a=c(0,1), b=c(0,0), c=c(1,1),
 #'                          stringsAsFactors = F )
-#' q = add.gquery.mutant(q, mutant.node, mutant.value, mutant.attr)
+#' q = addGqueryMutant(q, mutant.node, mutant.value, mutant.attr)
 #' 
 #' # multiple node mutant
 #' mutant.nodes = c('a','b')
 #' mutant.values = c(0,0) 
 #' mutant.attrs = data.frame(a=c(0), b=c(0), c=c('*'),
 #'                          stringsAsFactors = F )
-#' q = add.gquery.mutant(q, mutant.nodes, mutant.values, mutant.attrs)
+#' q = addGqueryMutant(q, mutant.nodes, mutant.values, mutant.attrs)
 #' @export
 #' 
-add.gquery.mutant <- function(j.query, mutant.nodes, mutant.values, df.mutant.attr) {
+addGqueryMutant <- function(j.query, mutant.nodes, mutant.values, df.mutant.attr) {
   #first get valid genes from query
   nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
   if (! all(mutant.nodes %in% nodes)) stop("Non-valid mutant.nodes")
   mutant.values = as.character(mutant.values)
   if (! all(mutant.values %in% c('0','1'))) stop("Non-valid mutant.values")
-  df.mutant.attr = validate.states(df.mutant.attr, nodes)
+  df.mutant.attr = validateStates(df.mutant.attr, nodes)
   
   df.mutant.attr = apply(attr, 1, function(x) { paste(x, collapse = '') })
   .jcall(j.query,returnSig = "V","addMutantFixedPoints",
@@ -238,12 +238,12 @@ add.gquery.mutant <- function(j.query, mutant.nodes, mutant.values, df.mutant.at
 #' @examples
 #' transition = data.frame(a=c(1,1), b=c(0,1), c=c(0,0),
 #'                   stringsAsFactors = F )
-#' q = add.gquery.transition(q, transition)
+#' q = addGqueryTransition(q, transition)
 #' @export
 #' 
-add.gquery.transition <- function(j.query, df.transition) {
+addGqueryTransition <- function(j.query, df.transition) {
   nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.transition = validate.states(df.transition, nodes)
+  df.transition = validateStates(df.transition, nodes)
   df.transition = apply(df.transition, 1, function(x) { paste(x, collapse = '')  })
   df.transition = data.frame(source = df.transition[-length(df.transition)], 
                    target = df.transition[-1],
@@ -273,12 +273,12 @@ add.gquery.transition <- function(j.query, df.transition) {
 #' @examples
 #' trap = data.frame(a=c(1), b=c('*'), c=c('*'),
 #'                   stringsAsFactors = F )
-#' q = add.gquery.trapspace(q, trap)
+#' q = addGqueryTrapspace(q, trap)
 #' @export
 #' 
-add.gquery.trapspace <- function(j.query, df.trapspace) {
+addGqueryTrapspace <- function(j.query, df.trapspace) {
   nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.trapspace = validate.states(df.trapspace, nodes)
+  df.trapspace = validateStates(df.trapspace, nodes)
   df.trapspace = apply(df.trapspace, 1, function(x) { paste(x, collapse = '')  })
   .jcall(j.query,returnSig = "V","addSubspace",df.trapspace)
   return(j.query)

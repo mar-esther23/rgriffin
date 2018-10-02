@@ -2,7 +2,7 @@
 #' Create a BoolNet net from a string
 #' @keywords internal
 #' 
-string2boolnet <- function (griffin.str.net, bodySeparator = ",", lowercaseGenes = FALSE,symbolic = FALSE) 
+stringToBoolnet <- function (griffin.str.net, bodySeparator = ",", lowercaseGenes = FALSE,symbolic = FALSE) 
 {
   if(  !("BoolNet" %in% (.packages()))  ) warning("BoolNet is not attached")
   #func <- readLines(file, -1)
@@ -159,9 +159,9 @@ string2boolnet <- function (griffin.str.net, bodySeparator = ",", lowercaseGenes
 #' @examples
 #' > data("cellcycle")
 #' > attr <- getAttractors(cellcycle)
-#' > attr.df <- attractor2dataframe(attr)
+#' > attr.df <- attractorToDataframe(attr)
 #' > print(dataframe2attractor(attr.df))
-dataframe2attractor <- function(df, fixedGenes) {
+dataframeToAttractor <- function(df, fixedGenes) {
   if(  !("BoolNet" %in% (.packages()))  ) warning("BoolNet is not attached")
   bin2intState <- function(x){ 
     x <- rev(x)

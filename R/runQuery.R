@@ -43,18 +43,18 @@
 #' print( q )
 #' 
 #' # Run the query
-#' nets = run.gquery(q)
+#' nets = runGquery(q)
 #' print( nets )
 #' 
 #' # Get BoolNet iterator
-#' nets = run.gquery(q, return="BoolNet")
+#' nets = runGquery(q, return="BoolNet")
 #' nets
 #' nextElem(nets)
 #' 
 #' 
 #' @export
 
-run.gquery <- function(query, 
+runGquery <- function(query, 
                        return=c("strings","files","iterator","BoolNet"),
                        folder.name=NULL,
                        network.name=NULL,
@@ -133,8 +133,8 @@ run.gquery <- function(query,
     }
     return(c(folder.name,network.name))
   }
-  if (return=="iterator") return( griffin.model.iterator(controller) )
-  if (return=="BoolNet") return( boolnet.model.iterator(controller) )
+  if (return=="iterator") return( griffinModelIterator(controller) )
+  if (return=="BoolNet") return( boolnetModelIterator(controller) )
 }
 
 
@@ -149,7 +149,7 @@ run.gquery <- function(query,
 #' @param n number of networks to return
 #' @keywords internal
 #' 
-griffin.model.iterator <- function(controller,n=1) {
+griffinModelIterator <- function(controller,n=1) {
   if(  !("iterators" %in% (.packages()))  ) warning("iterators is not attached")
   nextEl <- function() {
     n <- .jcall(controller,returnSig = "[Ljava/lang/String;","nextElement",as.integer(n))
@@ -157,7 +157,7 @@ griffin.model.iterator <- function(controller,n=1) {
     else return(n)
   }
   obj <- list(nextElem=nextEl)
-  class(obj) <- c('griffin.model.iterator', 'abstractiter', 'iter')
+  class(obj) <- c('griffinModelIterator', 'abstractiter', 'iter')
   obj
 }
 
@@ -167,7 +167,7 @@ griffin.model.iterator <- function(controller,n=1) {
 #' @param n number of networks to return
 #' @keywords internal
 #' 
-boolnet.model.iterator <- function(controller,n=1) {
+boolnetModelIterator <- function(controller,n=1) {
   if(  !("iterators" %in% (.packages()))  ) warning("iterators is not attached")
   nextEl <- function() {
     n <- .jcall(controller,returnSig = "[Ljava/lang/String;","nextElement",as.integer(n))
@@ -175,10 +175,10 @@ boolnet.model.iterator <- function(controller,n=1) {
     else {
       n <- gsub("false", "0", n)
       n <- gsub("true", "1", n)
-      return( string2boolnet(n) )
+      return( stringToBoolnet(n) )
     }
   }
   obj <- list(nextElem=nextEl)
-  class(obj) <- c('griffin.model.iterator', 'abstractiter', 'iter')
+  class(obj) <- c('griffinModelIterator', 'abstractiter', 'iter')
   obj
 }

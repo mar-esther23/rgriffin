@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-08-04" />
+<meta name="date" content="2018-09-16" />
 
 <title>rGriffin</title>
 
@@ -73,7 +73,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h4 class="author"><em>Miguel Carrillo</em></h4>
 <h4 class="author"><em>Eugenio Azpeitia</em></h4>
 <h4 class="author"><em>David Rosenblueth</em></h4>
-<h4 class="date"><em>2018-08-04</em></h4>
+<h4 class="date"><em>2018-09-16</em></h4>
 
 
 
@@ -85,6 +85,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="queries" class="section level2">
 <h2>Queries</h2>
 <p>The first step is to attach <code>rGriffin</code>. This will initialize the Java Virtual Machine and start <code>Griffin</code> with the default JVM options.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;rGriffin&quot;</span>)</code></pre></div>
 <p>If you want to initialize the JVM with different options like more memory see the functions <code>init.griffin()</code>. It is also posible to modify the default parameters changing the file “rGriffin/java/jvm-param.R”.</p>
 <div id="create-a-query" class="section level3">
 <h3>Create a query</h3>
@@ -129,7 +130,7 @@ inter
 <span class="co">#&gt; 4      c      b    -</span>
 <span class="co">#&gt; 5      c      c  OPU</span></code></pre></div>
 <p>We then create the query <code>q</code>. This creates an instance of the class query in the JVM.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">create.gquery.graph</span>(inter, genes)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">createGqueryGraph</span>(inter, genes)
 q
 <span class="co">#&gt; [1] &quot;Java-Object{mx.unam.iimas.griffin.r.RGriffinQuery@1bba400}&quot;</span></code></pre></div>
 <p>If you want to see the query use the <code>print</code> method.</p>
@@ -184,7 +185,7 @@ q
                  <span class="dt">c=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),
                  <span class="dt">stringsAsFactors =</span> F )</code></pre></div>
 <p>We can add this information to the query with the <code>add.gquery.attractors()</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">add.gquery.attractors</span>(q, attr)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">addGqueryAttractors</span>(q, attr)</code></pre></div>
 <p>You can add aditional restrictions like:</p>
 <ul>
 <li><code>add.gquery.cycle()</code> Add target cycle</li>
@@ -197,7 +198,7 @@ q
 <div id="run-the-query" class="section level3">
 <h3>Run the query</h3>
 <p>Once you have created the query with <code>run.gquery()</code>. This function will return all the networks that satisfy the restrictions</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">run.gquery</span>(q)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">runGquery</span>(q)
 <span class="kw">print</span>(nets)
 <span class="co">#&gt; [1] &quot;targets,factors\na,false\nb,((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))\nc,(!b&amp;c)\n&quot;                         </span>
 <span class="co">#&gt; [2] &quot;targets,factors\na,false\nb,(((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;             </span>
@@ -221,7 +222,7 @@ q
 <p>It is possible to obtain the topology of a <code>BooleanNetwork</code> object using <code>get.net.topology()</code>. This function determines the sign of each regulation as positive ‘+’, negative ‘-’ or ambiguous ‘MA’. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations ‘NR’.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BoolNet)
 <span class="kw">data</span>(<span class="st">&quot;cellcycle&quot;</span>)
-topology &lt;-<span class="st"> </span><span class="kw">get.net.topology</span>(cellcycle)
+topology &lt;-<span class="st"> </span><span class="kw">getNetTopology</span>(cellcycle)
 topology
 <span class="co">#&gt;    Source Target Interaction</span>
 <span class="co">#&gt; 1    CycD   CycD           +</span>
@@ -261,7 +262,7 @@ topology
 <span class="co">#&gt; 35   Cdh1   CycB           -</span></code></pre></div>
 <p>It is also possible to convert an <code>AttractorInfo</code> object into a data.frame using <code>attractor2dataframe</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cc.attr &lt;-<span class="st"> </span><span class="kw">getAttractors</span>(cellcycle)
-cycle &lt;-<span class="st"> </span><span class="kw">attractor2dataframe</span>(cc.attr)
+cycle &lt;-<span class="st"> </span><span class="kw">attractorToDataframe</span>(cc.attr)
 cycle &lt;-<span class="st"> </span>cycle[cellcycle$genes] <span class="co">#remove info columns</span>
 cycle
 <span class="co">#&gt;   CycD Rb E2F CycE CycA p27 Cdc20 Cdh1 UbcH10 CycB</span>
@@ -274,12 +275,12 @@ cycle
 <span class="co">#&gt; 7    1  0   1    1    0   0     0    1      0    0</span>
 <span class="co">#&gt; 8    1  0   1    1    1   0     0    1      0    0</span></code></pre></div>
 <p>Using this functions, it is possible to create a query that corresponds to a Boolean network. As we expect a cyclic attractor we will use <code>add.gquery.cycle()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q &lt;-<span class="st"> </span><span class="kw">create.gquery.graph</span>(topology, cellcycle$genes)
-q &lt;-<span class="st"> </span><span class="kw">add.gquery.cycle</span>(q, cycle)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q &lt;-<span class="st"> </span><span class="kw">createGqueryGraph</span>(topology, cellcycle$genes)
+q &lt;-<span class="st"> </span><span class="kw">addGqueryCycle</span>(q, cycle)</code></pre></div>
 <p>It is also possible to export the networks generated by <code>run.gquery()</code> directly to <code>BoolNet</code> with the option <code>return = &quot;BoolNet&quot;</code>. This option generates an iterator object, that returns the <code>BooleanNetwork</code> objects one by one using the function <code>iterators::nextElem()</code>.</p>
 <p>For example, if we use the three node example network:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">run.gquery</span>(q,<span class="dt">return =</span> <span class="st">&quot;BoolNet&quot;</span>)
-<span class="co">#&gt; Warning in boolnet.model.iterator(controller): iterators is not attached</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">runGquery</span>(q,<span class="dt">return =</span> <span class="st">&quot;BoolNet&quot;</span>)
+<span class="co">#&gt; Warning in boolnetModelIterator(controller): iterators is not attached</span>
 iterators::<span class="kw">nextElem</span>(nets)
 <span class="co">#&gt; Boolean network with 3 genes</span>
 <span class="co">#&gt; </span>

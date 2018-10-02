@@ -2,7 +2,7 @@
 #' @keywords internal
 #' @export
 #' 
-validate.states <- function(df.attr, nodes) {
+validateStates <- function(df.attr, nodes) {
   # check size and valid nodes
   if (! setequal(colnames(df.attr), nodes)) stop("Unequeal nodes between interaction table and gene list")
   df.attr = df.attr[, nodes] #reorder

@@ -147,52 +147,59 @@ stringToBoolnet <- function (griffin.str.net, bodySeparator = ",", lowercaseGene
 
 
 
-
 #' Convert a data frame with nodes displayed in Boolean format to a BoolNet attractor.
 #' 
 #' Convert a data frame with nodes displayed in Boolean format to a BoolNet attractor. First column is the attractor number, second is the number of state inside the attractor, the rest of the columns correspond to each node.
 #'
-#' @param Dataframe, see\code{\link{attractor2dataframe}} each column corresponds to the number of attractor, state, or node
-#' @param fixedGenes fixedGenes of network
+#' @param df dataframe, see\code{\link{attractor2dataframe}} each column corresponds to the number of attractor, state, or node
+#' @param node.names nodes of network
+#' @param fixed.genes fixedGenes of network
+#' 
 #' @return attr BoolNet attractor object
-#' @export
 #' @examples
 #' > data("cellcycle")
 #' > attr <- getAttractors(cellcycle)
 #' > attr.df <- attractorToDataframe(attr)
-#' > print(dataframe2attractor(attr.df))
-dataframeToAttractor <- function(df, fixedGenes) {
-  if(  !("BoolNet" %in% (.packages()))  ) warning("BoolNet is not attached")
+#' > print(dataframe2attractor(attr.df, cellcycle$genes))
+#' 
+#' @export
+dataframeToAttractor <- function(df, node.names, fixed.genes) {
   bin2intState <- function(x){ 
     x <- rev(x)
     sum(2^(which(rev(unlist(strsplit(as.character(x), "")) == 1))-1))
   }
-  attractors = vector("list", length = max(df$attractor))
-  #df <- df[seq(dim(df)[1],1),]
-  for(i in 1:nrow(df)) {
-    row <- df[i,]
-    n <- row[[1]]
-    state <- bin2intState(row[c(-1,-2)])
-    attractors[[ n ]] <- c(attractors[[ n ]], state)
-  }
-  for (i in seq(length(attractors))) {
-    l = length(attractors[[i]])
-    attractors[[i]] <- list(
-      involvedStates = array(attractors[[i]], dim=c(1,l)),
-      basinSize = NA
-    )  
-  }
-  node.names <- colnames(df)[c(-1,-2)]
-  if (missing(fixedGenes)) {
-    fixedGenes <- rep(-1, length(node.names))
-    names(fixedGenes) <- node.names
-  }
-  # the error is here
-  print(node.names)
-  print(fixedGenes)
-  stateInfo = list( genes = node.names, fixedGenes = fixedGenes )
   
+  if(  !("BoolNet" %in% (.packages()))  ) warning("BoolNet is not attached")
+  
+  if (missing(fixed.genes)) {
+    fixed.genes <- rep(-1, length(node.names))
+    names(fixed.genes) <- node.names
+  }
+  
+  #get property names
+  prop.names <- names(df)[( -1:(-2-length(node.names)) )]
+  # create attractors structure
+  attractors <- vector("list",max(df[[1]]) )
+  attractors <- lapply(attractors, function(x) {
+    sapply(c("involvedStates",prop.names),function(x) NULL)
+  } )
+  # fill attractors
+  for(i_attr in 1:max(df[[1]]) ) { 
+    attr = df[ df[1] == i_attr, ]
+    states <- apply(attr[node.names], 1, bin2intState )
+    names(states) <- NULL
+    states <- as.matrix(states)
+    attractors[[i_attr]]["involvedStates"] <- list(states)
+    for (prop in prop.names) { #fill attractor properties
+      attractors[[i_attr]][prop] <- attr[1,prop]
+    }
+  }
+  attractors
+  
+  # Final format
+  stateInfo = list( genes = node.names, fixedGenes = fixed.genes )
   result <- list( stateInfo = stateInfo,attractors = attractors )
   class(result) <- "AttractorInfo"
   result
 }
+

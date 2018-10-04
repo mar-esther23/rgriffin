@@ -50,8 +50,8 @@ We can then use this information to create a query. `rGriffin` can include other
 
 ```
 genes = c('a','b','c')
-inter = data.frame(source=c('a','b','c',’b’,'c'), 
-                  target=c('b'','c','b','b,'c'), 
+inter = data.frame(source=c('a','b','c','b','c'), 
+                  target=c('b'','c','b','b','c'), 
                   type=c('+','-','-','OPU','OPU'),
                     stringsAsFactors = F )
 q = createGqueryGraph(inter, genes)

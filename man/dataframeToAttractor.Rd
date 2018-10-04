@@ -4,12 +4,14 @@
 \alias{dataframeToAttractor}
 \title{Convert a data frame with nodes displayed in Boolean format to a BoolNet attractor.}
 \usage{
-dataframeToAttractor(df, fixedGenes)
+dataframeToAttractor(df, node.names, fixed.genes)
 }
 \arguments{
-\item{fixedGenes}{fixedGenes of network}
+\item{df}{dataframe, see\code{\link{attractor2dataframe}} each column corresponds to the number of attractor, state, or node}
 
-\item{Dataframe, }{see\code{\link{attractor2dataframe}} each column corresponds to the number of attractor, state, or node}
+\item{node.names}{nodes of network}
+
+\item{fixed.genes}{fixedGenes of network}
 }
 \value{
 attr BoolNet attractor object
@@ -21,5 +23,6 @@ Convert a data frame with nodes displayed in Boolean format to a BoolNet attract
 > data("cellcycle")
 > attr <- getAttractors(cellcycle)
 > attr.df <- attractorToDataframe(attr)
-> print(dataframe2attractor(attr.df))
+> print(dataframe2attractor(attr.df, cellcycle$genes))
+
 }

@@ -22,11 +22,11 @@
 #' 
 #' @examples
 #' data("cellcycle")
-#' attr = find.attractors( cellcycle )
+#' attr = findAttractors( cellcycle )
 #' print( attr )
 #' 
 #' @export
-find.attractors <- function(net, return=c("DataFrame","AttractorInfo")) {
+findAttractors <- function(net, return=c("DataFrame","AttractorInfo")) {
   if(  !("BoolNet" %in% (.packages()))  ) warning("BoolNet is not attached")
   if (! is(net,"BooleanNetwork")) stop("Network must be a valid BoolNet BooleanNetwork object")
   return <- match.arg(return)
@@ -60,8 +60,8 @@ find.attractors <- function(net, return=c("DataFrame","AttractorInfo")) {
 
 #library(BoolNet)
 #data(cellcycle)
-#df <-  find.attractors(cellcycle)
+#df <-  findAttractors(cellcycle)
 #node.names <- cellcycle$genes
 #fixed.genes <- NULL
 #df
-#find.attractors(cellcycle, return="AttractorInfo")
+#findAttractors(cellcycle, return="AttractorInfo")

@@ -59,7 +59,7 @@ attr = data.frame(a=c(0,'*',0),
                  b=c(0,1,0), 
                  c=c(0,0,1),
                  stringsAsFactors = F )
-q = addGqueryAttractors(q, attr)
+q = addGquerySteadyStates(q, attr)
 ```
 
 Then we can use `Griffin` to find the networks that behave according with our biological information. 

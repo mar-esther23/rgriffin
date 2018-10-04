@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 Boolean networks allow us to give a mechanistic explanation to how cell types emerge from regulatory networks. However, inferring the regulatory network and its functions is complex problem, as the available information is often incomplete. [`rGriffin`](https://github.com/mar-esther23/rgriffin) uses available biological information (regulatory interactions, cell types, mutants) codified as a set of restrictions and returns the [Boolean Networks](https://en.wikipedia.org/wiki/Boolean_network) that satisfy that restrictions. This Boolean networks can then be used to study the biological system.
 
-The `rGriffin` package is an R connector to [`Griffin`](http://turing.iimas.unam.mx/griffin/) (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. `Griffin` takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, `Griffin` explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The`rGriffin` package includes a number of functions to interact with the BoolNet package.
+The `rGriffin` package is an R connector to [`Griffin`](http://turing.iimas.unam.mx/griffin/) (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. `Griffin` takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, `Griffin` explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The `rGriffin` package includes a number of functions to interact with the BoolNet package.
 
 
 
@@ -37,11 +37,11 @@ The first step is to attach `rGriffin`. This will initialize the Java Virtual Ma
 library("rGriffin")
 ```
 
-If you want to initialize the JVM with different options like more memory see the functions `init.griffin()`. It is also posible to modify the default parameters changing the file "rGriffin/java/jvm-param.R".
+If you want to initialize the JVM with different options like more memory see the functions `initGriffin()`. It is also posible to modify the default parameters changing the file "rGriffin/java/jvm-param.R".
 
 ### Create a query
 
-All queries start with a topology that describes the nodes and its interactions. The function `create.gquery.graph()` takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.
+All queries start with a topology that describes the nodes and its interactions. The function `createGueryGraph()` takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.
 
 Depending on the sign the interactions can **positive** or **negative**. If in every condition the regulation will have the same sign the interaction is **ambiguous**. However, if you are not sure if the regulation is positive or negative in all contexts you can say that the interaction is **ambiguous**.  Depending on the degree of confidence in the existence of the interaction, the interactions can be: **mandatory** if you are sure the interaction will happen or **optional** if you suspect the interaction exists but you are not sure.
 
@@ -118,33 +118,35 @@ attr = data.frame(a=c(0,'*',0),
                  b=c(0,1,0), 
                  c=c(0,0,1),
                  stringsAsFactors = F )
+attr
 ```
 
-We can add this information to the query with the `add.gquery.attractors()` function:
+We can add this information to the query with the `addGquerySteadyStates()` function:
 
 ```{r, echo=TRUE}
-q = addGqueryAttractors(q, attr)
+q = addGquerySteadyStates(q, attr)
 ```
 
 You can add aditional restrictions like:
 
-* `add.gquery.cycle()`	Add target cycle 
-* `add.gquery.mutant()`	Add mutant with attractors 
-* `add.gquery.prohibited.attractors()`	Add prohibited attractors
-* `add.gquery.transition()`	Add a transition between two succesive states
-* `add.gquery.trapspace()`	Add a trapspace
+* `addGqueryCycle()`	Add target cycle 
+* `addGqueryAttractors()`	Add target steady states and cyclic attractors
+* `addGqueryMutant()`	Add mutant with attractors 
+* `addGqueryProhibitedAttractors()`	Add prohibited attractors
+* `addGqueryTransition()`	Add a transition between two succesive states
+* `addGqueryTrapspace()`	Add a trapspace
 
 
 ### Run the query
 
-Once you have created the query with `run.gquery()`. This function will return all the networks that satisfy the restrictions
+Once you have created the query with `runGquery()`. This function will return all the networks that satisfy the restrictions
 
 ```{r, echo=TRUE}
 nets = runGquery(q)
 print(nets)
 ```
 
-The function `run.gquery()` includes multiple options that can be seen in the documentation. Some of the most important are:
+The function `runGquery()` includes multiple options that can be seen in the documentation. Some of the most important are:
 
 * `allow.hypothesis`	activate or deactivate hypothetical regulations
 * `allow.additional.states`	allows networks with additional fixed-point attractors to those specified in the query
@@ -153,16 +155,28 @@ The function `run.gquery()` includes multiple options that can be seen in the do
 
 
 
+## Attractors
+
+Tha package `rGriffin` can also be used to determine the attractors, basin size and formula using sybolic methods. This allows `rGriffin` to be more efficient for large networks than other methods.
+
+For example, we can obtain the attractors and basins of the cell cycle network, that includes both steady state and cyclic attractors. The first column corresponds to the attractor number and the second to the state, so that cyclic attractors may occupy more than one row. The basinSize and basinFormula are for the whole attractor. By default rGriffin returns a dataframe, but it can also return `BoolNet AttractorInfo` objects.
+
+```{r, echo=TRUE}
+data(cellcycle)
+attr = findAttractors(cellcycle)
+attr
+```
+
+
 ## Connect to other packages
 
 ### BoolNet
 
 The R package includes various functions to import and export data to `BoolNet`.
 
-It is possible to obtain the topology of a `BooleanNetwork` object using `get.net.topology()`. This function determines the sign of each regulation as positive '+', negative '-' or ambiguous 'MA'. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations 'NR'.
+It is possible to obtain the topology of a `BooleanNetwork` object using `getNetTopology()`. This function determines the sign of each regulation as positive '+', negative '-' or ambiguous 'MA'. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations 'NR'.
 
 ```{r, echo=TRUE}
-library(BoolNet)
 data("cellcycle")
 topology <- getNetTopology(cellcycle)
 topology
@@ -172,43 +186,28 @@ It is also possible to convert an `AttractorInfo` object into a data.frame using
 
 ```{r, echo=TRUE}
 cc.attr <- getAttractors(cellcycle)
-cycle <- attractorToDataframe(cc.attr)
-cycle <- cycle[cellcycle$genes] #remove info columns
-cycle
+cc.attr <- attractorToDataframe(cc.attr)
+cc.attr
 ```
 
-Using this functions, it is possible to create a query that corresponds to a Boolean network. As we expect a cyclic attractor we will use `add.gquery.cycle()`.
+This network includes both steady state and cyclic attractors, it is possible to add both at the same time using `createGqueryAttractors()`.
 
 ```{r, echo=TRUE}
 q <- createGqueryGraph(topology, cellcycle$genes)
-q <- addGqueryCycle(q, cycle)
+q <- addGqueryAttractors(q, cc.attr)
+print(q)
 ```
 
-It is also possible to export the networks generated by `run.gquery()` directly to `BoolNet` with the option `return = "BoolNet"`. This option generates an iterator object, that returns the `BooleanNetwork` objects one by one using the function `iterators::nextElem()`. 
 
-For example, if we use the three node example network:
+Once the query has been created griffin determined the networks that satisfy the restriction using the function `runGquery()`. By default it returns the rules as strings, but it is also possible to export the networks directly to `BoolNet` with the option `return = "BoolNet"`. This option generates an iterator object, that returns the `BooleanNetwork` objects one by one using the function `iterators::nextElem()`. If there are no more available networks the `nextElem()` method will rise an error: `Error in obj$nextElem() : StopIteration`.
 
-```{r, include = FALSE}
-genes = c('a','b','c')
-inter = data.frame(source=c('a','b','b','c','c'), 
-                  target=c('b','b','c','b','c'), 
-                  type=c('+','+','-','-','+'),
-                    stringsAsFactors = F )
-q = createGqueryGraph(inter, genes)
-
-attr = data.frame(a=c(0,'*',0), 
-                 b=c(0,1,0), 
-                 c=c(0,0,1),
-                 stringsAsFactors = F )
-q = addGqueryAttractors(q, attr)
-```
+For big networks `rGriffin` may return a large number of solutions, in this case we will recover only one.
 
 ```{r, echo=TRUE}
-nets = runGquery(q,return = "BoolNet")
-iterators::nextElem(nets)
+library(iterators)
+net <- runGquery(q, return="BoolNet", return.network.limit=1)
+nextElem(net)
 ```
-
-If there are no more available networks the `nextElem()` method will rise an error: `Error in obj$nextElem() : StopIteration`.
 
 
 ### Other

@@ -68,42 +68,6 @@ createGqueryGraph <- function(df.graph, nodes) {
 
 
 
-#' Add target attractors to a Griffin query.
-#' 
-#' Add a set of target steady-state attractors to a Griffin query.
-#' The function takes a dataframe with the attractors 
-#' where wach row corresponds to a steady state and 
-#' each column corresponds to a node of the network
-#' The valid values are:
-#'    1: active
-#'    0: inactive
-#'    *: non-determined
-#'    
-#' @param j.query Griffin query
-#' @param df.attr dataframe with valid target attractors
-#' @return query java query to run Griffin
-#' 
-#' @examples
-#' attr = data.frame(a=c(0,'*',0,1), 
-#'                   b=c(0,1,0,'*'), 
-#'                   c=c(0,0,1,0),
-#'                   stringsAsFactors = F )
-#' q = addGqueryAttractors(q, attr)
-#' @export
-#' 
-addGqueryAttractors <- function(j.query, df.attr) {
-  nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.attr = validateStates(df.attr, nodes)
-  
-  # iterate over attractors and send to query
-  apply(df.attr, 1, function(x) {
-    x = paste(x, collapse = '')
-    .jcall(j.query,returnSig = "V","addAttractor",x)
-  })
-  return(j.query)
-}
-
-
 #' Add prohibited attractors to a Griffin query.
 #' 
 #' Add a set of prohibited steady-state attractors to a Griffin query.
@@ -135,38 +99,6 @@ addGqueryProhibitedAttractors <- function(j.query, df.prohibited.attr) {
     x = paste(x, collapse = '')
     .jcall(j.query,returnSig = "V","addFixedPointProhibition",x)
   })
-  return(j.query)
-}
-
-
-#' Add target cycle to a Griffin query.
-#' 
-#' Add a target cyclic attractor to a Griffin query.
-#' The function takes a dataframe with the states of the cycle 
-#' where wach row corresponds to a state in order and 
-#' each column corresponds to a node of the network
-#' The valid values are:
-#'    1: active
-#'    0: inactive
-#'    *: non-determined
-#'    
-#' @param j.query Griffin query
-#' @param df.cycle dataframe with cycle
-#' @return query java query to run Griffin
-#' 
-#' @examples
-#' cycle = data.frame(a=c(0,0), b=c(0,1), c=c(1,0),
-#'                   stringsAsFactors = F )
-#' q = addGqueryCycle(q, cycle)
-#' @export
-#' 
-addGqueryCycle <- function(j.query, df.cycle) {
-  #first get valid genes from query
-  nodes = .jcall(j.query,returnSig = "[Ljava/lang/String;","getGenesAsString")
-  df.cycle = validateStates(df.cycle, nodes)
-  df.cycle = apply(df.cycle, 1, function(x) x = paste(x, collapse = ''))
-  .jcall(j.query,returnSig = "V","addAttractor", df.cycle)
-  # TODO
   return(j.query)
 }
 

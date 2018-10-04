@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-09-16" />
+<meta name="date" content="2018-10-04" />
 
 <title>rGriffin</title>
 
@@ -73,23 +73,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h4 class="author"><em>Miguel Carrillo</em></h4>
 <h4 class="author"><em>Eugenio Azpeitia</em></h4>
 <h4 class="author"><em>David Rosenblueth</em></h4>
-<h4 class="date"><em>2018-09-16</em></h4>
+<h4 class="date"><em>2018-10-04</em></h4>
 
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>Boolean networks allow us to give a mechanistic explanation to how cell types emerge from regulatory networks. However, inferring the regulatory network and its functions is complex problem, as the available information is often incomplete. <a href="https://github.com/mar-esther23/rgriffin"><code>rGriffin</code></a> uses available biological information (regulatory interactions, cell types, mutants) codified as a set of restrictions and returns the <a href="https://en.wikipedia.org/wiki/Boolean_network">Boolean Networks</a> that satisfy that restrictions. This Boolean networks can then be used to study the biological system.</p>
-<p>The <code>rGriffin</code> package is an R connector to <a href="http://turing.iimas.unam.mx/griffin/"><code>Griffin</code></a> (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. <code>Griffin</code> takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, <code>Griffin</code> explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The<code>rGriffin</code> package includes a number of functions to interact with the BoolNet package.</p>
+<p>The <code>rGriffin</code> package is an R connector to <a href="http://turing.iimas.unam.mx/griffin/"><code>Griffin</code></a> (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. <code>Griffin</code> takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, <code>Griffin</code> explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The <code>rGriffin</code> package includes a number of functions to interact with the BoolNet package.</p>
 </div>
 <div id="queries" class="section level2">
 <h2>Queries</h2>
 <p>The first step is to attach <code>rGriffin</code>. This will initialize the Java Virtual Machine and start <code>Griffin</code> with the default JVM options.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;rGriffin&quot;</span>)</code></pre></div>
-<p>If you want to initialize the JVM with different options like more memory see the functions <code>init.griffin()</code>. It is also posible to modify the default parameters changing the file “rGriffin/java/jvm-param.R”.</p>
+<p>If you want to initialize the JVM with different options like more memory see the functions <code>initGriffin()</code>. It is also posible to modify the default parameters changing the file “rGriffin/java/jvm-param.R”.</p>
 <div id="create-a-query" class="section level3">
 <h3>Create a query</h3>
-<p>All queries start with a topology that describes the nodes and its interactions. The function <code>create.gquery.graph()</code> takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.</p>
+<p>All queries start with a topology that describes the nodes and its interactions. The function <code>createGueryGraph()</code> takes a dataframe with columns for: source node, target node, and type of interaction. It also takes a vector with the node names.</p>
 <p>Depending on the sign the interactions can <strong>positive</strong> or <strong>negative</strong>. If in every condition the regulation will have the same sign the interaction is <strong>ambiguous</strong>. However, if you are not sure if the regulation is positive or negative in all contexts you can say that the interaction is <strong>ambiguous</strong>. Depending on the degree of confidence in the existence of the interaction, the interactions can be: <strong>mandatory</strong> if you are sure the interaction will happen or <strong>optional</strong> if you suspect the interaction exists but you are not sure.</p>
 <p>The valid types of interctions are:</p>
 <ul>
@@ -183,21 +183,27 @@ q
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">attr =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="st">'*'</span>,<span class="dv">0</span>), 
                  <span class="dt">b=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>), 
                  <span class="dt">c=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),
-                 <span class="dt">stringsAsFactors =</span> F )</code></pre></div>
-<p>We can add this information to the query with the <code>add.gquery.attractors()</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">addGqueryAttractors</span>(q, attr)</code></pre></div>
+                 <span class="dt">stringsAsFactors =</span> F )
+attr
+<span class="co">#&gt;   a b c</span>
+<span class="co">#&gt; 1 0 0 0</span>
+<span class="co">#&gt; 2 * 1 0</span>
+<span class="co">#&gt; 3 0 0 1</span></code></pre></div>
+<p>We can add this information to the query with the <code>addGquerySteadyStates()</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q =<span class="st"> </span><span class="kw">addGquerySteadyStates</span>(q, attr)</code></pre></div>
 <p>You can add aditional restrictions like:</p>
 <ul>
-<li><code>add.gquery.cycle()</code> Add target cycle</li>
-<li><code>add.gquery.mutant()</code> Add mutant with attractors</li>
-<li><code>add.gquery.prohibited.attractors()</code> Add prohibited attractors</li>
-<li><code>add.gquery.transition()</code> Add a transition between two succesive states</li>
-<li><code>add.gquery.trapspace()</code> Add a trapspace</li>
+<li><code>addGqueryCycle()</code> Add target cycle</li>
+<li><code>addGqueryAttractors()</code> Add target steady states and cyclic attractors</li>
+<li><code>addGqueryMutant()</code> Add mutant with attractors</li>
+<li><code>addGqueryProhibitedAttractors()</code> Add prohibited attractors</li>
+<li><code>addGqueryTransition()</code> Add a transition between two succesive states</li>
+<li><code>addGqueryTrapspace()</code> Add a trapspace</li>
 </ul>
 </div>
 <div id="run-the-query" class="section level3">
 <h3>Run the query</h3>
-<p>Once you have created the query with <code>run.gquery()</code>. This function will return all the networks that satisfy the restrictions</p>
+<p>Once you have created the query with <code>runGquery()</code>. This function will return all the networks that satisfy the restrictions</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">runGquery</span>(q)
 <span class="kw">print</span>(nets)
 <span class="co">#&gt; [1] &quot;targets,factors\na,false\nb,((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))\nc,(!b&amp;c)\n&quot;                         </span>
@@ -205,7 +211,7 @@ q
 <span class="co">#&gt; [3] &quot;targets,factors\na,false\nb,((((((!a&amp;b)&amp;!c)|((!a&amp;b)&amp;c))|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;</span>
 <span class="co">#&gt; [4] &quot;targets,factors\na,false\nb,((((!a&amp;b)&amp;!c)|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;                           </span>
 <span class="co">#&gt; [5] &quot;targets,factors\na,false\nb,((((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;!b)&amp;c))|((a&amp;b)&amp;!c))|((a&amp;b)&amp;c))\nc,(!b&amp;c)\n&quot;</span></code></pre></div>
-<p>The function <code>run.gquery()</code> includes multiple options that can be seen in the documentation. Some of the most important are:</p>
+<p>The function <code>runGquery()</code> includes multiple options that can be seen in the documentation. Some of the most important are:</p>
 <ul>
 <li><code>allow.hypothesis</code> activate or deactivate hypothetical regulations</li>
 <li><code>allow.additional.states</code> allows networks with additional fixed-point attractors to those specified in the query</li>
@@ -214,14 +220,39 @@ q
 </ul>
 </div>
 </div>
+<div id="attractors" class="section level2">
+<h2>Attractors</h2>
+<p>Tha package <code>rGriffin</code> can also be used to determine the attractors, basin size and formula using sybolic methods. This allows <code>rGriffin</code> to be more efficient for large networks than other methods.</p>
+<p>For example, we can obtain the attractors and basins of the cell cycle network, that includes both steady state and cyclic attractors. The first column corresponds to the attractor number and the second to the state, so that cyclic attractors may occupy more than one row. The basinSize and basinFormula are for the whole attractor. By default rGriffin returns a dataframe, but it can also return <code>BoolNet AttractorInfo</code> objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(cellcycle)
+attr =<span class="st"> </span><span class="kw">findAttractors</span>(cellcycle)
+attr
+<span class="co">#&gt;   attractor state CycD Rb E2F CycE CycA p27 Cdc20 Cdh1 UbcH10 CycB</span>
+<span class="co">#&gt; 1         1     1    1  0   1    1    1   0     0    1      0    0</span>
+<span class="co">#&gt; 2         1     2    1  0   0    1    1   0     0    0      0    0</span>
+<span class="co">#&gt; 3         1     3    1  0   0    0    1   0     0    0      1    1</span>
+<span class="co">#&gt; 4         1     4    1  0   0    0    1   0     1    0      1    1</span>
+<span class="co">#&gt; 5         1     5    1  0   0    0    0   0     1    1      1    0</span>
+<span class="co">#&gt; 6         1     6    1  0   1    0    0   0     0    1      1    0</span>
+<span class="co">#&gt; 7         1     7    1  0   1    1    0   0     0    1      0    0</span>
+<span class="co">#&gt; 8         2     1    0  1   0    0    0   1     0    1      0    0</span>
+<span class="co">#&gt;   basinSize basinFormula</span>
+<span class="co">#&gt; 1       512         CycD</span>
+<span class="co">#&gt; 2       512         CycD</span>
+<span class="co">#&gt; 3       512         CycD</span>
+<span class="co">#&gt; 4       512         CycD</span>
+<span class="co">#&gt; 5       512         CycD</span>
+<span class="co">#&gt; 6       512         CycD</span>
+<span class="co">#&gt; 7       512         CycD</span>
+<span class="co">#&gt; 8       512        ~CycD</span></code></pre></div>
+</div>
 <div id="connect-to-other-packages" class="section level2">
 <h2>Connect to other packages</h2>
 <div id="boolnet" class="section level3">
 <h3>BoolNet</h3>
 <p>The R package includes various functions to import and export data to <code>BoolNet</code>.</p>
-<p>It is possible to obtain the topology of a <code>BooleanNetwork</code> object using <code>get.net.topology()</code>. This function determines the sign of each regulation as positive ‘+’, negative ‘-’ or ambiguous ‘MA’. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations ‘NR’.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BoolNet)
-<span class="kw">data</span>(<span class="st">&quot;cellcycle&quot;</span>)
+<p>It is possible to obtain the topology of a <code>BooleanNetwork</code> object using <code>getNetTopology()</code>. This function determines the sign of each regulation as positive ‘+’, negative ‘-’ or ambiguous ‘MA’. All regulations between nodes are considered mandatory. The function can also detect Non-functional regulations ‘NR’.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;cellcycle&quot;</span>)
 topology &lt;-<span class="st"> </span><span class="kw">getNetTopology</span>(cellcycle)
 topology
 <span class="co">#&gt;    Source Target Interaction</span>
@@ -262,39 +293,72 @@ topology
 <span class="co">#&gt; 35   Cdh1   CycB           -</span></code></pre></div>
 <p>It is also possible to convert an <code>AttractorInfo</code> object into a data.frame using <code>attractor2dataframe</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cc.attr &lt;-<span class="st"> </span><span class="kw">getAttractors</span>(cellcycle)
-cycle &lt;-<span class="st"> </span><span class="kw">attractorToDataframe</span>(cc.attr)
-cycle &lt;-<span class="st"> </span>cycle[cellcycle$genes] <span class="co">#remove info columns</span>
-cycle
-<span class="co">#&gt;   CycD Rb E2F CycE CycA p27 Cdc20 Cdh1 UbcH10 CycB</span>
-<span class="co">#&gt; 1    0  1   0    0    0   1     0    1      0    0</span>
-<span class="co">#&gt; 2    1  0   0    1    1   0     0    0      0    0</span>
-<span class="co">#&gt; 3    1  0   0    0    1   0     0    0      1    1</span>
-<span class="co">#&gt; 4    1  0   0    0    1   0     1    0      1    1</span>
-<span class="co">#&gt; 5    1  0   0    0    0   0     1    1      1    0</span>
-<span class="co">#&gt; 6    1  0   1    0    0   0     0    1      1    0</span>
-<span class="co">#&gt; 7    1  0   1    1    0   0     0    1      0    0</span>
-<span class="co">#&gt; 8    1  0   1    1    1   0     0    1      0    0</span></code></pre></div>
-<p>Using this functions, it is possible to create a query that corresponds to a Boolean network. As we expect a cyclic attractor we will use <code>add.gquery.cycle()</code>.</p>
+cc.attr &lt;-<span class="st"> </span><span class="kw">attractorToDataframe</span>(cc.attr)
+cc.attr
+<span class="co">#&gt;   attractor state CycD Rb E2F CycE CycA p27 Cdc20 Cdh1 UbcH10 CycB</span>
+<span class="co">#&gt; 1         1     1    0  1   0    0    0   1     0    1      0    0</span>
+<span class="co">#&gt; 2         2     1    1  0   0    1    1   0     0    0      0    0</span>
+<span class="co">#&gt; 3         2     2    1  0   0    0    1   0     0    0      1    1</span>
+<span class="co">#&gt; 4         2     3    1  0   0    0    1   0     1    0      1    1</span>
+<span class="co">#&gt; 5         2     4    1  0   0    0    0   0     1    1      1    0</span>
+<span class="co">#&gt; 6         2     5    1  0   1    0    0   0     0    1      1    0</span>
+<span class="co">#&gt; 7         2     6    1  0   1    1    0   0     0    1      0    0</span>
+<span class="co">#&gt; 8         2     7    1  0   1    1    1   0     0    1      0    0</span></code></pre></div>
+<p>This network includes both steady state and cyclic attractors, it is possible to add both at the same time using <code>createGqueryAttractors()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q &lt;-<span class="st"> </span><span class="kw">createGqueryGraph</span>(topology, cellcycle$genes)
-q &lt;-<span class="st"> </span><span class="kw">addGqueryCycle</span>(q, cycle)</code></pre></div>
-<p>It is also possible to export the networks generated by <code>run.gquery()</code> directly to <code>BoolNet</code> with the option <code>return = &quot;BoolNet&quot;</code>. This option generates an iterator object, that returns the <code>BooleanNetwork</code> objects one by one using the function <code>iterators::nextElem()</code>.</p>
-<p>For example, if we use the three node example network:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nets =<span class="st"> </span><span class="kw">runGquery</span>(q,<span class="dt">return =</span> <span class="st">&quot;BoolNet&quot;</span>)
-<span class="co">#&gt; Warning in boolnetModelIterator(controller): iterators is not attached</span>
-iterators::<span class="kw">nextElem</span>(nets)
-<span class="co">#&gt; Boolean network with 3 genes</span>
+q &lt;-<span class="st"> </span><span class="kw">addGqueryAttractors</span>(q, cc.attr)
+<span class="kw">print</span>(q)
+<span class="co">#&gt; Gene Regulation Specification</span>
+<span class="co">#&gt;  Set of genes: [Cdc20, Cdh1, CycA, CycB, CycD, CycE, E2F, p27, Rb, UbcH10]</span>
+<span class="co">#&gt;  geneOrder: null</span>
+<span class="co">#&gt;  Known regulations: None</span>
+<span class="co">#&gt;  Hypothetical regulations: None</span>
+<span class="co">#&gt;  Gene Interactions: [GeneInteraction [source=Cdc20, target=Cdh1, type=MPU], GeneInteraction [source=Cdc20, target=CycA, type=MNU], GeneInteraction [source=Cdc20, target=CycB, type=MNU], GeneInteraction [source=Cdc20, target=UbcH10, type=MPU], GeneInteraction [source=Cdh1, target=CycA, type=MNU], GeneInteraction [source=Cdh1, target=CycB, type=MNU], GeneInteraction [source=Cdh1, target=UbcH10, type=MNU], GeneInteraction [source=CycA, target=Cdh1, type=MNU], GeneInteraction [source=CycA, target=CycA, type=MPU], GeneInteraction [source=CycA, target=E2F, type=MNU], GeneInteraction [source=CycA, target=p27, type=MNU], GeneInteraction [source=CycA, target=Rb, type=MNU], GeneInteraction [source=CycA, target=UbcH10, type=MPU], GeneInteraction [source=CycB, target=Cdc20, type=MPU], GeneInteraction [source=CycB, target=Cdh1, type=MNU], GeneInteraction [source=CycB, target=E2F, type=MNU], GeneInteraction [source=CycB, target=p27, type=MNU], GeneInteraction [source=CycB, target=Rb, type=MNU], GeneInteraction [source=CycB, target=UbcH10, type=MPU], GeneInteraction [source=CycD, target=CycD, type=MPU], GeneInteraction [source=CycD, target=p27, type=MNU], GeneInteraction [source=CycD, target=Rb, type=MNU], GeneInteraction [source=CycE, target=p27, type=MNU], GeneInteraction [source=CycE, target=Rb, type=MNU], GeneInteraction [source=E2F, target=CycA, type=MPU], GeneInteraction [source=E2F, target=CycE, type=MPU], GeneInteraction [source=p27, target=Cdh1, type=MPU], GeneInteraction [source=p27, target=E2F, type=MPU], GeneInteraction [source=p27, target=p27, type=MPU], GeneInteraction [source=p27, target=Rb, type=MPU], GeneInteraction [source=Rb, target=CycA, type=MNU], GeneInteraction [source=Rb, target=CycE, type=MNU], GeneInteraction [source=Rb, target=E2F, type=MNU], GeneInteraction [source=UbcH10, target=CycA, type=MNU], GeneInteraction [source=UbcH10, target=UbcH10, type=MPU]]</span>
+<span class="co">#&gt;  Stable states: [[[Cdc20=0, Cdh1=1, CycA=0, CycB=0, CycD=0, CycE=0, E2F=0, p27=1, Rb=1, UbcH10=0]]]</span>
+<span class="co">#&gt;  Prohibited states: null</span>
+<span class="co">#&gt;  Known Regulators: None</span>
+<span class="co">#&gt;  Hypothetical Regulators: None</span>
+<span class="co">#&gt;  Extended regulators: None</span>
+<span class="co">#&gt;  Known Regulations: None</span>
+<span class="co">#&gt;  Hypothetical Regulations: None</span>
+<span class="co">#&gt;  Cyclic attractors: [BooleanNetworkStateTrajectory [[[[[Cdc20=0, Cdh1=0, CycA=1, CycB=0, CycD=1, CycE=1, E2F=0, p27=0, Rb=0, UbcH10=0]]=&gt;[[Cdc20=0, Cdh1=0, CycA=1, CycB=1, CycD=1, CycE=0, E2F=0, p27=0, Rb=0, UbcH10=1]]], [[[Cdc20=0, Cdh1=0, CycA=1, CycB=1, CycD=1, CycE=0, E2F=0, p27=0, Rb=0, UbcH10=1]]=&gt;[[Cdc20=1, Cdh1=0, CycA=1, CycB=1, CycD=1, CycE=0, E2F=0, p27=0, Rb=0, UbcH10=1]]], [[[Cdc20=1, Cdh1=0, CycA=1, CycB=1, CycD=1, CycE=0, E2F=0, p27=0, Rb=0, UbcH10=1]]=&gt;[[Cdc20=1, Cdh1=1, CycA=0, CycB=0, CycD=1, CycE=0, E2F=0, p27=0, Rb=0, UbcH10=1]]], [[[Cdc20=1, Cdh1=1, CycA=0, CycB=0, CycD=1, CycE=0, E2F=0, p27=0, Rb=0, UbcH10=1]]=&gt;[[Cdc20=0, Cdh1=1, CycA=0, CycB=0, CycD=1, CycE=0, E2F=1, p27=0, Rb=0, UbcH10=1]]], [[[Cdc20=0, Cdh1=1, CycA=0, CycB=0, CycD=1, CycE=0, E2F=1, p27=0, Rb=0, UbcH10=1]]=&gt;[[Cdc20=0, Cdh1=1, CycA=0, CycB=0, CycD=1, CycE=1, E2F=1, p27=0, Rb=0, UbcH10=0]]], [[[Cdc20=0, Cdh1=1, CycA=0, CycB=0, CycD=1, CycE=1, E2F=1, p27=0, Rb=0, UbcH10=0]]=&gt;[[Cdc20=0, Cdh1=1, CycA=1, CycB=0, CycD=1, CycE=1, E2F=1, p27=0, Rb=0, UbcH10=0]]], [[[Cdc20=0, Cdh1=1, CycA=1, CycB=0, CycD=1, CycE=1, E2F=1, p27=0, Rb=0, UbcH10=0]]=&gt;[[Cdc20=0, Cdh1=0, CycA=1, CycB=0, CycD=1, CycE=1, E2F=0, p27=0, Rb=0, UbcH10=0]]]]]]</span>
+<span class="co">#&gt;  Input-output pairs: []</span>
+<span class="co">#&gt;  Subspaces: None</span>
+<span class="co">#&gt;  Mutant experiments: None</span>
+<span class="co">#&gt;  State transition rules: None</span>
+<span class="co">#&gt;  exactRegulations: false</span>
+<span class="co">#&gt;  additionalSteadyStates: false</span>
+<span class="co">#&gt;  divideQueryByTopology: false</span>
+<span class="co">#&gt;  topologyIteratorType: SEQUENTIAL</span>
+<span class="co">#&gt;  limitTopologyRange: false</span>
+<span class="co">#&gt;  limitToNumberOfNetworks: -1</span>
+<span class="co">#&gt;  topologyRange: None</span>
+<span class="co">#&gt;  topologicalDistanceRadius: 1</span>
+<span class="co">#&gt;  blockSteadyAPosteriory: false</span>
+<span class="co">#&gt;  additonalCycles: false</span>
+<span class="co">#&gt;  ambiguityNotAllowed: true</span>
+<span class="co">#&gt;  numberOfCycles:1</span></code></pre></div>
+<p>Once the query has been created griffin determined the networks that satisfy the restriction using the function <code>runGquery()</code>. By default it returns the rules as strings, but it is also possible to export the networks directly to <code>BoolNet</code> with the option <code>return = &quot;BoolNet&quot;</code>. This option generates an iterator object, that returns the <code>BooleanNetwork</code> objects one by one using the function <code>iterators::nextElem()</code>. If there are no more available networks the <code>nextElem()</code> method will rise an error: <code>Error in obj$nextElem() : StopIteration</code>.</p>
+<p>For big networks <code>rGriffin</code> may return a large number of solutions, in this case we will recover only one.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(iterators)
+net &lt;-<span class="st"> </span><span class="kw">runGquery</span>(q, <span class="dt">return=</span><span class="st">&quot;BoolNet&quot;</span>, <span class="dt">return.network.limit=</span><span class="dv">1</span>)
+<span class="kw">nextElem</span>(net)
+<span class="co">#&gt; Boolean network with 10 genes</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Involved genes:</span>
-<span class="co">#&gt; a b c</span>
+<span class="co">#&gt; Cdc20 Cdh1 CycA CycB CycD CycE E2F p27 Rb UbcH10</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Transition functions:</span>
-<span class="co">#&gt; a = 0</span>
-<span class="co">#&gt; b = ((((!a&amp;b)&amp;!c)|((a&amp;!b)&amp;!c))|((a&amp;b)&amp;!c))</span>
-<span class="co">#&gt; c = (!b&amp;c)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Knocked-out and over-expressed genes:</span>
-<span class="co">#&gt; a = 0</span></code></pre></div>
-<p>If there are no more available networks the <code>nextElem()</code> method will rise an error: <code>Error in obj$nextElem() : StopIteration</code>.</p>
+<span class="co">#&gt; Cdc20 = CycB</span>
+<span class="co">#&gt; Cdh1 = (((((((((((((((!Cdc20&amp;!CycA)&amp;!CycB)&amp;!p27)|(((!Cdc20&amp;!CycA)&amp;!CycB)&amp;p27))|(((!Cdc20&amp;!CycA)&amp;CycB)&amp;p27))|(((!Cdc20&amp;CycA)&amp;!CycB)&amp;p27))|(((!Cdc20&amp;CycA)&amp;CycB)&amp;p27))|(((Cdc20&amp;!CycA)&amp;!CycB)&amp;!p27))|(((Cdc20&amp;!CycA)&amp;!CycB)&amp;p27))|(((Cdc20&amp;!CycA)&amp;CycB)&amp;!p27))|(((Cdc20&amp;!CycA)&amp;CycB)&amp;p27))|(((Cdc20&amp;CycA)&amp;!CycB)&amp;!p27))|(((Cdc20&amp;CycA)&amp;!CycB)&amp;p27))|(((Cdc20&amp;CycA)&amp;CycB)&amp;!p27))|(((Cdc20&amp;CycA)&amp;CycB)&amp;p27))</span>
+<span class="co">#&gt; CycA = (((((((((((((((((((((((((!Cdc20&amp;!CycA)&amp;!Cdh1)&amp;!E2F)&amp;!Rb)&amp;!UbcH10)|(((((!Cdc20&amp;!CycA)&amp;!Cdh1)&amp;E2F)&amp;!Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;!Cdh1)&amp;!E2F)&amp;!Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;!Cdh1)&amp;!E2F)&amp;!Rb)&amp;UbcH10))|(((((!Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;!Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;!Rb)&amp;UbcH10))|(((((!Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;Rb)&amp;UbcH10))|(((((!Cdc20&amp;!CycA)&amp;Cdh1)&amp;E2F)&amp;!Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;!Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;!Rb)&amp;UbcH10))|(((((!Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;Rb)&amp;!UbcH10))|(((((!Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;Rb)&amp;UbcH10))|(((((Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;!Rb)&amp;!UbcH10))|(((((Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;!Rb)&amp;UbcH10))|(((((Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;Rb)&amp;!UbcH10))|(((((Cdc20&amp;CycA)&amp;!Cdh1)&amp;E2F)&amp;Rb)&amp;UbcH10))|(((((Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;!Rb)&amp;!UbcH10))|(((((Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;!Rb)&amp;UbcH10))|(((((Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;Rb)&amp;!UbcH10))|(((((Cdc20&amp;CycA)&amp;Cdh1)&amp;E2F)&amp;Rb)&amp;UbcH10))</span>
+<span class="co">#&gt; CycB = (!Cdc20&amp;!Cdh1)</span>
+<span class="co">#&gt; CycD = CycD</span>
+<span class="co">#&gt; CycE = (E2F&amp;!Rb)</span>
+<span class="co">#&gt; E2F = (((((((!CycA&amp;!CycB)&amp;!p27)&amp;!Rb)|(((!CycA&amp;!CycB)&amp;p27)&amp;!Rb))|(((!CycA&amp;CycB)&amp;p27)&amp;!Rb))|(((CycA&amp;!CycB)&amp;p27)&amp;!Rb))|(((CycA&amp;CycB)&amp;p27)&amp;!Rb))</span>
+<span class="co">#&gt; p27 = ((((((((((!CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;!CycE)|((((!CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((!CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;!CycE))|((((!CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;!CycE))|((((CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;!CycE))</span>
+<span class="co">#&gt; Rb = ((((((((((((((((((!CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;!CycE)|((((!CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((!CycA&amp;!CycB)&amp;p27)&amp;CycD)&amp;!CycE))|((((!CycA&amp;!CycB)&amp;p27)&amp;CycD)&amp;CycE))|((((!CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;!CycE))|((((!CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((!CycA&amp;CycB)&amp;p27)&amp;CycD)&amp;!CycE))|((((!CycA&amp;CycB)&amp;p27)&amp;CycD)&amp;CycE))|((((CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;!CycE))|((((CycA&amp;!CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((CycA&amp;!CycB)&amp;p27)&amp;CycD)&amp;!CycE))|((((CycA&amp;!CycB)&amp;p27)&amp;CycD)&amp;CycE))|((((CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;!CycE))|((((CycA&amp;CycB)&amp;p27)&amp;!CycD)&amp;CycE))|((((CycA&amp;CycB)&amp;p27)&amp;CycD)&amp;!CycE))</span>
+<span class="co">#&gt; UbcH10 = ((((((((((((((((((((((!Cdc20&amp;!CycA)&amp;!CycB)&amp;!Cdh1)&amp;UbcH10)|((((!Cdc20&amp;!CycA)&amp;CycB)&amp;!Cdh1)&amp;!UbcH10))|((((!Cdc20&amp;!CycA)&amp;CycB)&amp;!Cdh1)&amp;UbcH10))|((((!Cdc20&amp;CycA)&amp;!CycB)&amp;!Cdh1)&amp;!UbcH10))|((((!Cdc20&amp;CycA)&amp;!CycB)&amp;!Cdh1)&amp;UbcH10))|((((!Cdc20&amp;CycA)&amp;CycB)&amp;!Cdh1)&amp;!UbcH10))|((((!Cdc20&amp;CycA)&amp;CycB)&amp;!Cdh1)&amp;UbcH10))|((((Cdc20&amp;!CycA)&amp;!CycB)&amp;!Cdh1)&amp;!UbcH10))|((((Cdc20&amp;!CycA)&amp;!CycB)&amp;!Cdh1)&amp;UbcH10))|((((Cdc20&amp;!CycA)&amp;CycB)&amp;!Cdh1)&amp;!UbcH10))|((((Cdc20&amp;!CycA)&amp;CycB)&amp;!Cdh1)&amp;UbcH10))|((((Cdc20&amp;CycA)&amp;!CycB)&amp;!Cdh1)&amp;!UbcH10))|((((Cdc20&amp;CycA)&amp;!CycB)&amp;!Cdh1)&amp;UbcH10))|((((Cdc20&amp;CycA)&amp;CycB)&amp;!Cdh1)&amp;!UbcH10))|((((Cdc20&amp;CycA)&amp;CycB)&amp;!Cdh1)&amp;UbcH10))|((((Cdc20&amp;!CycA)&amp;!CycB)&amp;Cdh1)&amp;UbcH10))|((((Cdc20&amp;!CycA)&amp;CycB)&amp;Cdh1)&amp;UbcH10))|((((Cdc20&amp;CycA)&amp;!CycB)&amp;Cdh1)&amp;UbcH10))|((((Cdc20&amp;CycA)&amp;CycB)&amp;Cdh1)&amp;UbcH10))</span></code></pre></div>
 </div>
 <div id="other" class="section level3">
 <h3>Other</h3>

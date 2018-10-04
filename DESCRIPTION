@@ -13,9 +13,9 @@ Description:
     See the Jupyter Tutorials for more examples.
 Depends: 
     R (>= 3.1.0), 
+    BoolNet, 
     rJava (>= 0.9) 
 Suggests: 
-    BoolNet, 
     iterators, 
     testthat,
     knitr,

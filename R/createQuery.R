@@ -145,7 +145,7 @@ addGqueryMutant <- function(j.query, mutant.nodes, mutant.values, df.mutant.attr
   if (! all(mutant.values %in% c('0','1'))) stop("Non-valid mutant.values")
   df.mutant.attr = validateStates(df.mutant.attr, nodes)
   
-  df.mutant.attr = apply(attr, 1, function(x) { paste(x, collapse = '') })
+  df.mutant.attr = apply(df.mutant.attr, 1, function(x) { paste(x, collapse = '') })
   .jcall(j.query,returnSig = "V","addMutantFixedPoints",
          mutant.nodes, mutant.values, df.mutant.attr )
   return(j.query)

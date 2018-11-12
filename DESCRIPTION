@@ -12,11 +12,11 @@ Description:
     The rgriffin package includes a number of functions to interact with the BoolNet package.
     See the Jupyter Tutorials for more examples.
 Depends: 
-    R (>= 3.1.0), 
-    BoolNet, 
-    rJava (>= 0.9) 
+    R (>= 3.1.0),
+    BoolNet,
+    rJava (>= 0.9)
 Suggests: 
-    iterators, 
+    iterators,
     testthat,
     knitr,
     rmarkdown

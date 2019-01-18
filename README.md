@@ -8,12 +8,12 @@ The `rGriffin` package is an R connector to [`Griffin`](http://turing.iimas.unam
 
 ## Installation
 
-rGriffin depends on Java and rJava.
+rGriffin depends on R, Java, rJava, and BoolNet.
 
-First, make sure you have java installed, we recommend [Oracle JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html).
+First, make sure you have R (>=3.1) and java installed. We recommend [Oracle JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html).
 
 
-Then install [rJava](https://cran.r-project.org/web/packages/rJava/index.html), this can be done from CRAN. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first.
+Then install [rJava](https://cran.r-project.org/web/packages/rJava/index.html), this can be done from CRAN. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first from the R console.
 	
 ```
 > install.packages(rJava)
@@ -24,6 +24,8 @@ Finally, install rgriffin from github using devtools
 ```
 >devtools::install_github("mar-esther23/rgriffin")
 ```
+
+To see more details about the installation in specific operative systems see the [issues](https://github.com/mar-esther23/rgriffin/issues)
 
 
 ## A small example

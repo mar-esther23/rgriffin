@@ -39,7 +39,7 @@ affiliations:
    index: 4
  - name: Department of Evolutionary Biology and Environmental Studies, University of Zurich, Zurich, Switzerland
    index: 5
-date: 5 December 2018
+date: 30 January 2018
 bibliography: paper.bib
 ---
 

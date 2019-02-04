@@ -25,7 +25,7 @@ initGriffin <- function(jvm.param=NULL, force.init=TRUE) {
   if (is.null(jvm.param)) source(paste0(griffin.path,"jvm-param.R")) #load jvm.param from conf file
   params = paste0(jvm.param, "-Dlog4j.configuration=file:",
                   griffin.path,"conf/log4j.properties")
-  
+  print(params)
   #JVM initialization
   rJava::.jinit(parameters=params)
   rJava::.jaddClassPath(".")

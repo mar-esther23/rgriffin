@@ -163,7 +163,7 @@ For example, we can obtain the attractors and basins of the cell cycle network, 
 
 ```{r, echo=TRUE}
 data(cellcycle)
-attr = findAttractors(cellcycle)
+attr = getBasins(cellcycle)
 attr
 ```
 

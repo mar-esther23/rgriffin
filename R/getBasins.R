@@ -1,20 +1,20 @@
 #' Obtain the attractors and basins from a BoolNet network using symbolic methods.
 #' 
 #' This function takes a valid BoolNet BooleanNetwork.
-#' and returns the attractors, basin size and basin formula of the network using a binary decision tree based method.
-#' To avoid problems use fully parantherized formulas. Griffin uses a left-right formula reader that may cause problems. 
+#' and returns the attractors and, if requiered basin size and basin formula of the network using a binary decision tree based method.
+#' The process may be memory intensive for large networks. To avoid 
+#' edge cases use fully parantherized formulas.
 #'
 #' @param net BoolNet BooleanNetwork
 #' @param return 
-#'        "DataFrame"  returns a dataframe with the attractor in Boolean format
-#'        "AttractorInfo"  returns a BoolNet attractor object. 
-#'        where cyclic states may use more than one row. If requiered the 
-#'        method will return the basinSize and basinFormula as columns in the 
-#'        attr$attractors object. For cyclic attractor it will add the properties 
-#'        in all rows of the states of the attractor.
+#'        "DataFrame"  returns a dataframe with the attractor in Boolean
+#'        format where cyclic states may use more than one row. The 
+#'        basinSize and basinFormula are added as columns
+#'        "AttractorInfo"  returns a BoolNet attractor object. The 
+#'        basinSize and basinFormula are added to attractor$attractor.
 #'
 #' @return 
-#'       If "DataFrame" it will return a dataframe wherethe first column corresponds to the number of the atrractor and the second to the state in the case of cyclic atractors the attractor will take multiple states. The rest of the columns correspond to the value if he nodes, tha basinSize and basiFormula
+#'       If "DataFrame" it will return a dataframe wherethe first column corresponds to the number of the atrractor and the second to the state in the case of cyclic atractors the attractor will take multiple states. The rest of the columns correspond to the value if he nodes, tha basinSize and basiFormula.
 #'       If "AtractorInfo" return a BoolNet attractor object where basinSize and basinFormula are in attactor$attractors
 #' 
 #' @seealso 
@@ -22,11 +22,11 @@
 #' 
 #' @examples
 #' data("cellcycle")
-#' attr = findAttractors( cellcycle )
+#' attr = getBasins( cellcycle )
 #' print( attr )
 #' 
 #' @export
-findAttractors <- function(net, return=c("DataFrame","AttractorInfo")) {
+getBasins <- function(net, return=c("DataFrame","AttractorInfo") ) {
   if(  !("BoolNet" %in% (.packages()))  ) warning("BoolNet is not attached")
   if (! is(net,"BooleanNetwork")) stop("Network must be a valid BoolNet BooleanNetwork object")
   return <- match.arg(return)
@@ -52,10 +52,6 @@ findAttractors <- function(net, return=c("DataFrame","AttractorInfo")) {
   if (return=="DataFrame") return(df)
   dataframeToAttractor(df, net$genes)
 }
-
-
-
-
 
 
 #library(BoolNet)

@@ -52,12 +52,3 @@ getBasins <- function(net, return=c("DataFrame","AttractorInfo") ) {
   if (return=="DataFrame") return(df)
   dataframeToAttractor(df, net$genes)
 }
-
-
-#library(BoolNet)
-#data(cellcycle)
-#df <-  findAttractors(cellcycle)
-#node.names <- cellcycle$genes
-#fixed.genes <- NULL
-#df
-#findAttractors(cellcycle, return="AttractorInfo")

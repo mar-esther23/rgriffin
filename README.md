@@ -92,3 +92,12 @@ In January, 2017 we organized a course in [C3-UNAM](https://www.c3.unam.mx) to t
 The development of `rGriffin` began during the [EOBM 2017](http://fejer.ucol.mx/biomate/) in [CUIB](https://portal.ucol.mx/cuib/). For the following year we continued developing `rGriffin` as our schedules allowed. There were multiple challenges during the development: defining user-friendly inputs, using `Rjava`, and structuring the package. In August 2018, we attended the [TIB2018-BCDW](http://congresos.nnb.unam.mx/TIB2018/r-bioconductor-developers-workshop-2018/) where we received valuable guidance from Martin Morgan and Benilton S Carvalho. It was during this workshop that the first version of `rGriffin` was finished.
 
 We hope to continue developing `Griffin` and `rGriffin`. If you have ideas, suggestions or bugs, please contact us at [Github](https://github.com/mar-esther23/rgriffin).
+
+November 2020
+
+```
+// Dear programmer:
+// When I wrote this code, only god and
+// I knew how it worked.
+// Now, only god knows it!
+```

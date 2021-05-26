@@ -28,8 +28,8 @@ rGriffin depends on R, Java, rJava, and BoolNet.
 
 2. Install [rJava](https://cran.r-project.org/web/packages/rJava/index.html) and [devtools](https://www.r-project.org/nosvn/pandoc/devtools.html) using the R console. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first.
 ```
-> install.packages(rJava)
-> install.packages(devtools)
+> install.packages("rJava")
+> install.packages("devtools")
 ```
 
 3. Install rgriffin from github using devtools

@@ -13,7 +13,7 @@ authors:
     affiliation: "1, *"
   - name: Mariana Esther Martinez-Sanchez
     orcid: 0000-0002-6115-1449
-    affiliation: "1, 2, *"
+    affiliation: "2, *"
   - name: Miguel Carrillo
     orcid: 0000-0003-2105-3075
     affiliation: 3
@@ -23,15 +23,12 @@ authors:
   - name: David A. Rosenblueth
     orcid: 0000-0001-8933-8267
     affiliation: 4
-  - name: Elena Alvarez-Buylla
-    orcid: 0000-0002-7938-6473
-    affiliation: "1, 2"
 affiliations:
  - name: These authors contributed equally
    index: *
  - name: Centro de Ciencias de la Complejidad, Universidad Nacional Autónoma de México
    index: 1
- - name: Laboratorio Genética Molecular, Epigenética, Desarrollo y Evolución de Plantas, Instituto de Ecología, Universidad Nacional Autónoma de México
+ - name: Laboratory of Immunobiology and Genetics, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
    index: 2
  - name: Facultad de Ciencias. Universidad Nacional Autónoma de México
    index: 3
@@ -39,7 +36,7 @@ affiliations:
    index: 4
  - name: Department of Evolutionary Biology and Environmental Studies, University of Zurich, Zurich, Switzerland
    index: 5
-date: 30 January 2018
+date: May 26, 2021
 bibliography: paper.bib
 ---
 
@@ -49,12 +46,12 @@ Boolean networks allow us to give a mechanistic explanation to how cell types em
 
 Griffin (Gene Regulatory Interaction Formulator For Inquiring Networks) treats the available experimental information as constraints over the space of all possible Boolean networks. A formal definition of regulation, for example, allows us to express these constraints as a formula in Boolean (propositional) logic. Other available information such as known cell types and mutants are similarly represented and incorporated in such a formula. The resulting formula is given to a “SAT solver’’, an off-the-shelf computer program that obtains truth values of the variables of a Boolean formula making such a formula true. Each such assignment of truth values represents a Boolean network satisfying the given constraints.
 
-The rGriffin package is an R connector to Griffin[@Griffin]. rGriffin takes available biological information codified as data frames. These data frames are turned to Griffin and each network produced by Griffin is given back to rGriffin. rGriffin then returns the networks that satisfy the constraints either as plain text Boolean functions or as BoolNet objects. The package includes a number of functions to interact with the BoolNet [@BoolNet] package. This integration allows the user to extend their analyses using BoolNet-compatible packages.
+The rGriffin package is an R connector to Griffin[@Griffin]. rGriffin takes available biological information codified as data frames. These data frames are turned to Griffin and each network produced by Griffin is given back to rGriffin. rGriffin then returns the networks that satisfy the constraints either as plain text Boolean functions or as BoolNet objects. The package includes a number of functions to translate Boolean functions and state networks to topologies and tables and to interact with the BoolNet [@BoolNet] package. This integration allows the user to extend their analyses using BoolNet-compatible packages.
 
 rGriffin was designed to be used by both biologists and computer scientists to infer and verify Boolean networks. rGriffin dramatically simplifies the Griffin user interface and allows the user to perform further analyses using BoolNet. Griffin has already been used in a number of scientific publications [@Griffin, @garcia:2017, @azpeitia:2017,@weinstein:2015,@rosenblueth:2014]. The source code for rGriffin has been archived in github: [@github].
 
 # Acknowledgements
 
-We acknowledge Nathan Weinstein, Elizabeth Ortiz, and the members of the “Seminario de Biología de Sistemas del Centro de Ciencias de la Complejidad” for their valuable feedback. We thank Martin Morgan and Benilton S Carvalho for their valuable guidance during TIB2018-BCDW. We also gratefully acknowledge support from CONACYT: 240180, 2015-01-687 and UNAM-DGAPA-PAPIIT:  IN211516, IN208517, IN205517, IN204217
+We acknowledge Nathan Weinstein, Elizabeth Ortiz, and the members of the “Seminario de Biología de Sistemas del Centro de Ciencias de la Complejidad” for their valuable feedback. We thank Martin Morgan and Benilton S Carvalho for their valuable guidance during TIB2018-BCDW. We also gratefully acknowledge support from CONACYT: 
 
 # References

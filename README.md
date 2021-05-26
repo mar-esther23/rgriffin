@@ -64,9 +64,10 @@ a | b | c
 We can then use this information to create a query. `rGriffin` can include other types of information like transition between cell type, cycles, transitions between cell types or mutant cell types.
 
 ```
+library("rGriffin")
 genes = c('a','b','c')
 inter = data.frame(source=c('a','b','c','b','c'), 
-                  target=c('b'','c','b','b','c'), 
+                  target=c('b','c','b','b','c'), 
                   type=c('+','-','-','OPU','OPU'),
                     stringsAsFactors = F )
 q = createGqueryGraph(inter, genes)
@@ -104,9 +105,10 @@ In January, 2017 we organized a course in [C3-UNAM](https://www.c3.unam.mx) to t
 
 The development of `rGriffin` began during the [EOBM 2017](http://fejer.ucol.mx/biomate/) in [CUIB](https://portal.ucol.mx/cuib/). For the following year we continued developing `rGriffin` as our schedules allowed. There were multiple challenges during the development: defining user-friendly inputs, using `Rjava`, and structuring the package. In August 2018, we attended the [TIB2018-BCDW](http://congresos.nnb.unam.mx/TIB2018/r-bioconductor-developers-workshop-2018/) where we received valuable guidance from Martin Morgan and Benilton S Carvalho. It was during this workshop that the first version of `rGriffin` was finished.
 
+We created a docker to simplify the installation and solved some minor errors during 2021.
+
 We hope to continue developing `Griffin` and `rGriffin`. If you have ideas, suggestions or bugs, please contact us at [Github](https://github.com/mar-esther23/rgriffin).
 
-November 2020
 
 ```
 // Dear programmer:

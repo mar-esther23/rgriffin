@@ -26,15 +26,15 @@ authors:
 affiliations:
  - name: These authors contributed equally
    index: *
- - name: Institute of Software Technology, Graz University of Technology
+ - name: Institute of Software Technology, Graz University of Technology, Austria
    index: 1
- - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
+ - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas, México
    index: 2
- - name: Facultad de Ciencias. Universidad Nacional Autónoma de México
+ - name: Facultad de Ciencias. Universidad Nacional Autónoma de México, México
    index: 3
- - name: Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México
+ - name: Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México, México
    index: 4
- - name: Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México
+ - name: Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México, México
    index: 5
 date: May 26, 2021
 bibliography: paper.bib

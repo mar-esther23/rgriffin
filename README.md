@@ -11,9 +11,9 @@ We recommend using the [rGriffin docker](https://hub.docker.com/r/stanmoon/rgrif
 1. [Install docker](https://docs.docker.com/engine/install/) in your system
 
 2. Run the following command from the terminal, change mypassword for a password you select, and the path (/home/user/tmp/) to an existing path in you local file system, you can also change /home/rstudio/tmp to a different location but keep the base path /home/rstudio/
-´´´
+```
 docker run --rm -e PASSWORD=mypassword -p 8787:8787 -v /home/user/tmp/:/home/rstudio/tmp stanmoon/rgriffin
-´´´
+```
 The container will be removed when it exits, but this can be changed by removing de --rm option. See more options in the [docker documentation](https://docs.docker.com/engine/reference/run/).
 
 3. Open browser at [localhost:8787](localhost:8787) and connect with the user rstudio and with the password you provided in step 2

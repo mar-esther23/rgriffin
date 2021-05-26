@@ -4,25 +4,38 @@ Boolean networks allow us to give a mechanistic explanation to how cell types em
 
 The `rGriffin` package is an R connector to [`Griffin`](http://turing.iimas.unam.mx/griffin/) (Gene Regulatory Interaction Formulator For Inquiring Networks), a java library for inference and analysis of Boolean Network models. `Griffin` takes as inputs biologically meaningful constraints and turns them into a symbolic representation. Using a SAT engine, `Griffin` explores the Boolean Network search space, finding all satisfying assignments that are compatible with the specified constraints. The`rGriffin` package includes a number of functions to interact with the BoolNet package.
 
+## Docker
+
+We recommend using the [rGriffin docker](https://hub.docker.com/r/stanmoon/rgriffin).
+
+1. [Install docker](https://docs.docker.com/engine/install/) in your system
+
+2. Run the following command from the terminal, change mypassword for a password you select, and the path (/home/user/tmp/) to an existing path in you local file system, you can also change /home/rstudio/tmp to a different location but keep the base path /home/rstudio/
+´´´
+docker run --rm -e PASSWORD=mypassword -p 8787:8787 -v /home/user/tmp/:/home/rstudio/tmp stanmoon/rgriffin
+´´´
+The container will be removed when it exits, but this can be changed by removing de --rm option. See more options in the [docker documentation](https://docs.docker.com/engine/reference/run/).
+
+3. Open browser at [localhost:8787](localhost:8787) and connect with the user rstudio and with the password you provided in step 2
+
 
 
 ## Installation
 
 rGriffin depends on R, Java, rJava, and BoolNet.
 
-First, make sure you have R (>=3.1) and java installed. We recommend [Oracle JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html).
+1. Install R (>=3.1) and java. We recommend [Oracle JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html).
 
-
-Then install [rJava](https://cran.r-project.org/web/packages/rJava/index.html), this can be done from CRAN. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first from the R console.
-	
+2. Install [rJava](https://cran.r-project.org/web/packages/rJava/index.html) and [devtools](https://www.r-project.org/nosvn/pandoc/devtools.html) using the R console. While rJava should be authomatically instaled with rGriffin, the installation of rJava is succeptible to mistakes, so it is best to install it first.
 ```
 > install.packages(rJava)
+> install.packages(devtools)
 ```
 
-Finally, install rgriffin from github using devtools
+3. Install rgriffin from github using devtools
 
 ```
->devtools::install_github("mar-esther23/rgriffin")
+> devtools::install_github("mar-esther23/rgriffin")
 ```
 
 To see more details about the installation in specific operative systems see the [issues](https://github.com/mar-esther23/rgriffin/issues)

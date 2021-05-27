@@ -8,13 +8,14 @@
 #' Initialize the Java Virtual Machine (JVM) and create a connection with griffin
 #' 
 #' Initialize the Java Virtual Machine (JVM) and create a connection with griffin.
-#' By default it takes the parameters from the "java/jvm-param.R" file. To change the defaults modify this file in your rgriffin folder
+#' By default it takes the parameters from the "java/jvm-param.R" file. To change the defaults modify this file in the folder where rGriffin is instaled (~//rgriffin/int/java/jvm-param.R)
 #'  
 #' @param jvm.param string with parameters to initialize the jvm. 
 #' @param force.init If set to TRUE JVM is re-initialized even if it is already running.
 #' 
 #' @example 
 #' init.griffin("-XX:-UseGCOverheadLimit -Xmx2000m ") #initialize griffin with only 2GB of RAM
+#' library(rGriffin)
 #' 
 #' @export
 initGriffin <- function(jvm.param=NULL, force.init=TRUE) {

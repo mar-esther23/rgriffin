@@ -56,3 +56,14 @@ rGriffin was designed to be used by both biologists and computer scientists to i
 We acknowledge Nathan Weinstein, Elizabeth Ortiz, and the members of the "Seminario de Biologia de Sistemas del Centro de Ciencias de la Complejidad" for their valuable feedback. We thank Martin Morgan and Benilton S Carvalho for their valuable guidance during TIB2018-BCDW. We also gratefully acknowledge support from CONACYT: 
 
 # References
+
+@article{Kauffman,
+  title={Metabolic stability and epigenesis in randomly constructed genetic nets},
+  author=Kauffman, Stuart A,
+  journal=Journal of theoretical biology,
+  volume=22,
+  number=3,
+  pages=437-467,
+  year=1969,
+  publisher=Elsevier,
+}

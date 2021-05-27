@@ -8,7 +8,7 @@ tags:
   - Network inference
   - SAT solver
 authors:
-  - name: Stalin Muñoz
+  - name: Stalin Munoz
     orcid: 0000-0001-6259-1609
     affiliation: "1, *"
   - name: Mariana Esther Martinez-Sanchez
@@ -28,13 +28,13 @@ affiliations:
    index: *
  - name: Institute of Software Technology, Graz University of Technology, Austria
    index: 1
- - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas, México
+ - name: Laboratorio de Inmunobiologia y Genetica, Instituto Nacional de Enfermedades Respiratorias Ismael Cosio Villegas, Mexico
    index: 2
- - name: Facultad de Ciencias. Universidad Nacional Autónoma de México, México
+ - name: Facultad de Ciencias. Universidad Nacional Autonoma de Mexico, Mexico
    index: 3
- - name: Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México, México
+ - name: Centro de Ciencias Matematicas, Universidad Nacional Autonoma de Mexico, Mexico
    index: 4
- - name: Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México, México
+ - name: Instituto de Investigaciones en Matematicas Aplicadas y en Sistemas, Universidad Nacional Autonoma de Mexico, Mexico
    index: 5
 date: May 26, 2021
 bibliography: paper.bib
@@ -53,6 +53,6 @@ rGriffin was designed to be used by both biologists and computer scientists to i
 
 # Acknowledgements
 
-We acknowledge Nathan Weinstein, Elizabeth Ortiz, and the members of the "Seminario de Biología de Sistemas del Centro de Ciencias de la Complejidad" for their valuable feedback. We thank Martin Morgan and Benilton S Carvalho for their valuable guidance during TIB2018-BCDW. We also gratefully acknowledge support from CONACYT: 
+We acknowledge Nathan Weinstein, Elizabeth Ortiz, and the members of the "Seminario de Biologia de Sistemas del Centro de Ciencias de la Complejidad" for their valuable feedback. We thank Martin Morgan and Benilton S Carvalho for their valuable guidance during TIB2018-BCDW. We also gratefully acknowledge support from CONACYT: 
 
 # References

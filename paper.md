@@ -24,15 +24,15 @@ authors:
     orcid: 0000-0001-8933-8267
     affiliation: 5
 affiliations:
- - name: Lyman Spitzer, Jr. Fellow, Princeton University
+ - name: Institute of Software Technology, Graz University of Technology
    index: 1
- - name: Institution Name
+ - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
    index: 2
- - name: Independent Researcher
+ - name: Facultad de Ciencias. Universidad Nacional Autónoma de México
    index: 3
- - name: Lyman Spitzer, Jr. Fellow, Princeton University
+ - name: Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México
    index: 4
- - name: Institution Name
+ - name: Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México
    index: 5
 date: 26 May 2021
 bibliography: paper.bib

@@ -1,45 +1,56 @@
 ---
-title 'rGriffin  R Gene Regulatory Interaction Formulator For Inquiring Networks'
 tags
+authors
+affiliations
+date: May 26, 2021
+bibliography paper.bib
+
+
+title: 'rGriffin  R Gene Regulatory Interaction Formulator For Inquiring Networks'
+tags:
   - R
   - Java
   - Boolean networks
   - Regulatory networks
   - Network inference
   - SAT solver
-authors
-  - name Stalin Muñoz
-    orcid 0000-0001-6259-1609
-    affiliation "1, *"
-  - name Mariana Esther Martinez-Sanchez
-    orcid 0000-0002-6115-1449
-    affiliation "2, *"
-  - name Miguel Carrillo
-    orcid 0000-0003-2105-3075
-    affiliation 3
-  - name Eugenio Azpeitia
-    orcid 0000-0001-7841-5933
-    affiliation 4
-  - name David A. Rosenblueth
-    orcid 0000-0001-8933-8267
-    affiliation 5
-affiliations
- - name These authors contributed equally
-   index *
- - name Institute of Software Technology, Graz University of Technology
-   index 1
- - name Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
-   index 2
- - name Facultad de Ciencias. Universidad Nacional Autónoma de México
-   index 3
- - name Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México
-   index 4
- - name Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México
-   index 5
-date May 26, 2021
-bibliography paper.bib
+authors:
+  - name: Stalin Muñoz
+    orcid: 0000-0001-6259-1609
+    affiliation: "1, *"
+  - name: Mariana Esther Martinez-Sanchez
+    orcid: 0000-0002-6115-1449
+    affiliation: "2, *"
+  - name: Miguel Carrillo
+    orcid: 0000-0003-2105-3075
+    affiliation: 3
+  - name: Eugenio Azpeitia
+    orcid: 0000-0001-7841-5933
+    affiliation: 4
+  - name: David A. Rosenblueth
+    orcid: 0000-0001-8933-8267
+    affiliation: 5
+affiliations:
+ - name: These authors contributed equally
+   index: *
+ - name: Institute of Software Technology, Graz University of Technology
+   index: 1
+ - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
+   index: 2
+ - name: Facultad de Ciencias. Universidad Nacional Autónoma de México
+   index: 3
+ - name: Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México
+   index: 4
+ - name: Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México
+   index: 5
+date: 13 August 2017
+bibliography: paper.bib
 
 
+# Optional fields if submitting to a AAS journal too, see this blog post:
+# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
+aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
+aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 

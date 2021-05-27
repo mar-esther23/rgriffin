@@ -14,6 +14,13 @@ authors:
     affiliation: 2
   - name: Author with no affiliation^[corresponding author]
     affiliation: 3
+  - name: 2Adrian M. Price-Whelan^[co-first author] # note this makes a footnote saying 'co-first author'
+    orcid: 0000-0003-0872-7098
+    affiliation: "1, 4" # (Multiple affiliations must be quoted)
+  - name: 2Author Without ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+    affiliation: 5
+  - name: 2Author with no affiliation^[corresponding author]
+    affiliation: 6
 affiliations:
  - name: Lyman Spitzer, Jr. Fellow, Princeton University
    index: 1
@@ -21,6 +28,12 @@ affiliations:
    index: 2
  - name: Independent Researcher
    index: 3
+ - name: Lyman Spitzer, Jr. Fellow, Princeton University
+   index: 4
+ - name: Institution Name
+   index: 5
+ - name: Independent Researcher
+   index: 6
 date: 13 August 2017
 bibliography: paper.bib
 

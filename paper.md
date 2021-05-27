@@ -8,20 +8,21 @@ tags:
   - Network inference
   - SAT solver
 authors:
-  - name: Adrian M. Price-Whelan^[co-first author] # note this makes a footnote saying 'co-first author'
-    orcid: 0000-0003-0872-7098
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+  - name: Stalin Muñoz^[co-first author and co-corresponding author]
+    orcid: 0000-0001-6259-1609
+    affiliation: 1
+  - name: Mariana Esther Martinez-Sanchez^[co-first author and co-corresponding author]
+    orcid: 0000-0002-6115-1449
     affiliation: 2
-  - name: Author with no affiliation^[corresponding author]
+  - name: Miguel Carrillo
+    orcid: 0000-0003-2105-3075
     affiliation: 3
-  - name: 2Adrian M. Price-Whelan^[co-first author] # note this makes a footnote saying 'co-first author'
-    orcid: 0000-0003-0872-7098
-    affiliation: "1, 4" # (Multiple affiliations must be quoted)
-  - name: 2Author Without ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+  - name: Eugenio Azpeitia
+    orcid: 0000-0001-7841-5933
+    affiliation: 4
+  - name: David A. Rosenblueth
+    orcid: 0000-0001-8933-8267
     affiliation: 5
-  - name: 2Author with no affiliation^[corresponding author]
-    affiliation: 6
 affiliations:
  - name: Lyman Spitzer, Jr. Fellow, Princeton University
    index: 1
@@ -33,8 +34,6 @@ affiliations:
    index: 4
  - name: Institution Name
    index: 5
- - name: Independent Researcher
-   index: 6
 date: 26 May 2021
 bibliography: paper.bib
 

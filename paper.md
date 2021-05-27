@@ -1,11 +1,12 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'rGriffin  R Gene Regulatory Interaction Formulator For Inquiring Networks'
 tags:
-  - Python
-  - astronomy
-  - dynamics
-  - galactic dynamics
-  - milky way
+  - R
+  - Java
+  - Boolean networks
+  - Regulatory networks
+  - Network inference
+  - SAT solver
 authors:
   - name: Adrian M. Price-Whelan^[co-first author] # note this makes a footnote saying 'co-first author'
     orcid: 0000-0003-0872-7098
@@ -34,13 +35,9 @@ affiliations:
    index: 5
  - name: Independent Researcher
    index: 6
-date: 13 August 2017
+date: 26 May 2021
 bibliography: paper.bib
 
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 

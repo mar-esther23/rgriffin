@@ -8,31 +8,31 @@ tags:
   - Network inference
   - SAT solver
 authors:
-  - name: Stalin Muñoz^[co-first author and co-corresponding author]
+  - name: Stalin Muñoz^[first author]
     orcid: 0000-0001-6259-1609
     affiliation: 1
-  - name: Mariana Esther Martinez-Sanchez^[co-first author and co-corresponding author]
-    orcid: 0000-0002-6115-1449
-    affiliation: 2
   - name: Miguel Carrillo
     orcid: 0000-0003-2105-3075
-    affiliation: 3
+    affiliation: 2
   - name: Eugenio Azpeitia
     orcid: 0000-0001-7841-5933
-    affiliation: 4
+    affiliation: 3
   - name: David A. Rosenblueth
     orcid: 0000-0001-8933-8267
+    affiliation: 4
+  - name: Mariana Esther Martinez-Sanchez^[corresponding author]
+    orcid: 0000-0002-6115-1449
     affiliation: 5
 affiliations:
  - name: Institute of Software Technology, Graz University of Technology
    index: 1
- - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
-   index: 2
  - name: Facultad de Ciencias. Universidad Nacional Autónoma de México
-   index: 3
+   index: 2
  - name: Centro de Ciencias Matemáticas, Universidad Nacional Autónoma de México
-   index: 4
+   index: 3
  - name: Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas, Universidad Nacional Autónoma de México
+   index: 4
+ - name: Laboratorio de Inmunobiología y Genética, Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas
    index: 5
 date: 26 May 2021
 bibliography: paper.bib
